@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="org.opennms.features.enlinkd.service.api" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <feature name="org.opennms.features.enlinkd.service.api" version="${project.version}" description="OpenNMS :: Features :: Enlinkd :: Service :: API">
+        <feature>guava</feature>
+        <bundle>mvn:org.opennms.features.enlinkd/org.opennms.features.enlinkd.persistence.api/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.enlinkd/org.opennms.features.enlinkd.service.api/${project.version}</bundle>
+        <bundle>wrap:mvn:net.sf.jung/jung-api/${jungVersion}</bundle>
+        <bundle>mvn:org.opennms.core/org.opennms.core.criteria/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.enlinkd/org.opennms.features.enlinkd.persistence.api/${project.version}</bundle>
+        <bundle>mvn:com.google.guava/guava/${guavaVersion}</bundle>
+    </feature>
+</features>

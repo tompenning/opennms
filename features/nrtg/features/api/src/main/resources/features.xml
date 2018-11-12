@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="osgi-nrtg-api" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <feature name="osgi-nrtg-api" version="${project.version}" description="OpenNMS :: Features :: NRTG :: Features :: API">
+        <details>The API contains the models for the NRTG OSGI projects. It has models for collection jobs, measurements and protocol collectors.</details>
+        <bundle>mvn:org.opennms.features.nrtg/nrtg-api/${project.version}</bundle>
+    </feature>
+</features>

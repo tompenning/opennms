@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="vaadin-jmxconfiggenerator" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <feature name="vaadin-jmxconfiggenerator" version="${project.version}" description="OpenNMS :: Features :: JMX Config Generator :: Web UI">
+        <feature>vaadin</feature>
+        <feature>jmxconfiggenerator</feature>
+        <bundle>mvn:org.opennms.features/vaadin-jmxconfiggenerator/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.vaadin-components/core/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.themes/jmxconfiggenerator-theme/${project.version}</bundle>
+    </feature>
+</features>

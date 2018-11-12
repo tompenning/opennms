@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="opennms-topology-runtime-vmware" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <repository>mvn:org.opennms.osgi.features.topology/opennms-topology-runtime-base/${project.version}/xml/features</repository>
+    <feature name="opennms-topology-runtime-vmware" version="${project.version}" description="OpenNMS :: Features :: Topology :: Features :: VMware">
+        <details>Runtime and plugins for the OpenNMS VMware topology web app.</details>
+        <feature>opennms-topology-runtime-base</feature>
+        <bundle>mvn:org.opennms.features.topology.plugins.topo/org.opennms.features.topology.plugins.topo.vmware/${project.version}</bundle>
+    </feature>
+</features>

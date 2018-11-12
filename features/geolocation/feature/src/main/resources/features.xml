@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="geolocation" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <feature name="geolocation" version="${project.version}" description="OpenNMS :: Features :: Geolocation :: Feature">
+        <bundle>mvn:org.opennms.features.geolocation/org.opennms.features.geolocation.api/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.geolocation/org.opennms.features.geolocation.services/${project.version}</bundle>
+        <bundle>mvn:com.google.guava/guava/${guavaVersion}</bundle>
+        <bundle>mvn:org.opennms.features.geocoder/org.opennms.features.geocoder.api/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.geocoder/org.opennms.features.geocoder.google/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.geocoder/org.opennms.features.geocoder.nominatim/${project.version}</bundle>
+    </feature>
+</features>

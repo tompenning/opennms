@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="osgi-nrtg-local" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <repository>mvn:org.opennms.osgi.features.nrtg/osgi-nrtg-base/${project.version}/xml/features</repository>
+    <feature name="osgi-nrtg-local" version="${project.version}" description="OpenNMS :: Features :: NRTG :: Features :: Local">
+        <details>OSGI Runtime for the NRTCollector.</details>
+        <feature>osgi-nrtg-base</feature>
+        <bundle>mvn:org.opennms.features.nrtg/nrtg-nrtbroker-local/${project.version}</bundle>
+    </feature>
+</features>

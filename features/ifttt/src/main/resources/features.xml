@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="ifttt-integration" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <feature name="ifttt-integration" version="${project.version}" description="OpenNMS :: Features :: IFTTT Integration">
+        <feature>opennms-dao-api</feature>
+        <feature>guava</feature>
+        <bundle>mvn:org.opennms.features/org.opennms.features.ifttt/${project.version}</bundle>
+    </feature>
+</features>

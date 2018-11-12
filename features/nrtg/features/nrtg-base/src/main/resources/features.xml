@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="osgi-nrtg-base" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <repository>mvn:org.opennms.osgi.features.nrtg.protocolcollector/osgi-nrtg-protocolcollector-snmp/${project.version}/xml/features</repository>
+    <repository>mvn:org.opennms.osgi.features.nrtg.protocolcollector/osgi-nrtg-protocolcollector-tca/${project.version}/xml/features</repository>
+    <repository>mvn:org.opennms.osgi.features.nrtg/osgi-nrtg-web/${project.version}/xml/features</repository>
+    <feature name="osgi-nrtg-base" version="${project.version}" description="OpenNMS :: Features :: NRTG :: Features :: Base">
+        <details>OSGI Runtime for the NRTCollector.</details>
+        <feature>osgi-nrtg-protocolcollector-snmp</feature>
+        <feature>osgi-nrtg-protocolcollector-tca</feature>
+        <feature>osgi-nrtg-web</feature>
+    </feature>
+</features>

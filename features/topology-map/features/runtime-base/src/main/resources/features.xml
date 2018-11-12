@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="opennms-topology-runtime-base" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <repository>mvn:org.opennms.features/vaadin/${project.version}/xml/features</repository>
+    <repository>mvn:org.opennms.osgi.features.topology/opennms-topology-api/${project.version}/xml/features</repository>
+    <feature name="opennms-topology-runtime-base" version="${project.version}" description="OpenNMS :: Features :: Topology :: Features :: Base">
+        <details>Base runtime and plugins for the OpenNMS topology web app.</details>
+        <feature>opennms-core</feature>
+        <feature>opennms-topology-api</feature>
+        <feature>geolocation</feature>
+        <bundle>mvn:org.opennms.features.topology/org.opennms.features.topology.app/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.topology.plugins.topo/org.opennms.features.topology.plugins.topo.history/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.topology/org.opennms.features.topology.link/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.topology.plugins/org.opennms.features.topology.plugins.layout/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.topology/org.opennms.features.topology.netutils/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.topology/org.opennms.features.topology.widgetset/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.topology.themes/org.opennms.features.topology.themes.default-theme/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.vaadin-components/graph/${project.version}</bundle>
+    </feature>
+</features>

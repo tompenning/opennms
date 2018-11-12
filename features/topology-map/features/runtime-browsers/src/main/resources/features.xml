@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="opennms-topology-runtime-browsers" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <repository>mvn:org.opennms.osgi.features.topology/opennms-topology-runtime-linkd/${project.version}/xml/features</repository>
+    <feature name="opennms-topology-runtime-browsers" version="${project.version}" description="OpenNMS :: Features :: Topology :: Features :: Browsers">
+        <details>Alarm browser to enhance the Linkd topology UI.</details>
+        <feature>opennms-topology-api</feature>
+        <bundle>mvn:org.opennms.features.topology.plugins/org.opennms.features.topology.plugins.browsers/${project.version}</bundle>
+    </feature>
+</features>

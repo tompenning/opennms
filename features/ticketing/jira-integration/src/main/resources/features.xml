@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="jira-troubleticketer" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <feature name="jira-troubleticketer" version="${project.version}" description="OpenNMS :: Features :: Ticketing :: JIRA">
+        <bundle>mvn:org.opennms.features/jira-troubleticketer/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.ticketing/org.opennms.features.ticketing.api/${project.version}</bundle>
+        <bundle>mvn:org.opennms.core/org.opennms.core.lib/${project.version}</bundle>
+        <bundle>mvn:joda-time/joda-time/${jodaTimeVersion}</bundle>
+        <bundle>mvn:org.opennms.features/jira-client/${project.version}</bundle>
+    </feature>
+</features>

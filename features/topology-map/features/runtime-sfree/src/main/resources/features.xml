@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="opennms-topology-runtime-sfree" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <repository>mvn:org.opennms.osgi.features.topology/opennms-topology-runtime-base/${project.version}/xml/features</repository>
+    <feature name="opennms-topology-runtime-sfree" version="${project.version}" description="OpenNMS :: Features :: Topology :: Features :: Scale Free">
+        <details>Simple Scale Free and plugins for the OpenNMS topology web app.</details>
+        <feature>opennms-topology-runtime-base</feature>
+        <bundle>mvn:org.opennms.features.topology.plugins.topo/org.opennms.features.topology.plugins.topo.sfree/${project.version}</bundle>
+    </feature>
+</features>

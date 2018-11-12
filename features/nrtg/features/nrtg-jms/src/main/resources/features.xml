@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="osgi-nrtg-jms" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <repository>mvn:org.opennms.osgi.features.nrtg/osgi-nrtg-base/${project.version}/xml/features</repository>
+    <repository>mvn:org.apache.activemq/activemq-karaf/5.14.5/xml/features</repository>
+    <feature name="osgi-nrtg-jms" version="${project.version}" description="OpenNMS :: Features :: NRTG :: Features :: JMS">
+        <details>OSGI Runtime for the NRTCollector.</details>
+        <feature>osgi-nrtg-base</feature>
+        <feature>activemq</feature>
+        <feature>activemq-blueprint</feature>
+        <feature version="${springVersion}">spring-jms</feature>
+        <bundle>mvn:org.opennms.features.nrtg/nrtg-collector/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.nrtg/nrtg-nrtbroker-jms/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.nrtg/nrtg-broker/${project.version}</bundle>
+    </feature>
+</features>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="vaadin-dashboard" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <feature name="vaadin-dashboard" version="${project.version}" description="OpenNMS :: Features :: Dashboard">
+        <details>OpenNMS Vaadin Dashboard</details>
+        <feature>opennms-core</feature>
+        <feature>vaadin</feature>
+        <bundle>mvn:org.opennms.features/vaadin-dashboard/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.vaadin-components/core/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.themes/dashboard-theme/${project.version}</bundle>
+        <bundle>wrap:mvn:org.vaadin.addons/dragdroplayouts/1.1.1</bundle>
+    </feature>
+</features>

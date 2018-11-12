@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="osgi-nrtg-protocolcollector-tca" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <!-- TODO MVR consolidate all features from all the different sub-modules in one big module -->
+    <repository>mvn:org.opennms.osgi.features.nrtg/osgi-nrtg-api/${project.version}/xml/features</repository>
+    <feature name="osgi-nrtg-protocolcollector-tca" version="${project.version}" description="OpenNMS :: Features :: NRTG :: Features :: Collectors :: TCA">
+        <details>Plugin for the NRTCollector OSGI Satellite to collect data from TCA agents.</details>
+        <feature>osgi-nrtg-api</feature>
+        <bundle>mvn:org.opennms.features.nrtg.protocolcollector/nrtg-protocolcollector-tca/${project.version}</bundle>
+    </feature>
+</features>

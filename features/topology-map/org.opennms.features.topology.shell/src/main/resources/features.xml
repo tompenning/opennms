@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="org.opennms.features.topology.shell" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <feature name="org.opennms.features.topology.shell" version="${project.version}" description="OpenNMS :: Features :: Topology :: Shell Commands">
+        <details>Generated using Pax-Construct</details>
+        <bundle>mvn:org.opennms.features.topology/org.opennms.features.topology.shell/${project.version}</bundle>
+    </feature>
+</features>

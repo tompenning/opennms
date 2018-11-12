@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="opennms-jaas-login-module" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <feature name="opennms-jaas-login-module" version="${project.version}" description="OpenNMS :: OSGi Container :: Karaf JAAS Login Module">
+        <bundle>mvn:org.opennms.container/org.opennms.container.jaas-login-module/${project.version}</bundle>
+        <bundle>mvn:org.apache.karaf.jaas/org.apache.karaf.jaas.modules/${karafVersion}</bundle>
+        <bundle>mvn:org.apache.karaf.jaas/org.apache.karaf.jaas.config/${karafVersion}</bundle>
+    </feature>
+</features>

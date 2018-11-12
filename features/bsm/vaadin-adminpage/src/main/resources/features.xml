@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="vaadin-adminpage" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <feature name="vaadin-adminpage" version="${project.version}" description="OpenNMS :: Features :: BSM :: Vaadin Adminpage">
+        <feature>vaadin</feature>
+        <feature>org.opennms.features.bsm.service.api</feature>
+        <bundle>mvn:org.opennms.features.bsm/vaadin-adminpage/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.vaadin-components/core/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.vaadin-components/widgetset/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.topology/org.opennms.features.topology.link/${project.version}</bundle>
+    </feature>
+</features>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="opennms-topology-runtime-pathoutage" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <repository>mvn:org.opennms.osgi.features.topology/opennms-topology-runtime-base/${project.version}/xml/features</repository>
+    <feature name="opennms-topology-runtime-pathoutage" version="${project.version}" description="OpenNMS :: Features :: Topology :: Features :: PathOutage">
+        <details>Generated using Pax-Construct</details>
+        <feature>opennms-topology-runtime-base</feature>
+        <bundle>mvn:org.opennms.features.topology.plugins.topo/org.opennms.features.topology.plugins.topo.pathoutage/${project.version}</bundle>
+    </feature>
+</features>

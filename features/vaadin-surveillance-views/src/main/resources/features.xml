@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="vaadin-surveillance-views" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <feature name="vaadin-surveillance-views" version="${project.version}" description="OpenNMS :: Features :: Surveillance Views">
+        <details>OpenNMS Vaadin Surveillance Views</details>
+        <feature>opennms-core</feature>
+        <feature>vaadin</feature>
+        <bundle>mvn:org.opennms.features/vaadin-surveillance-views/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.vaadin-components/graph/${project.version}</bundle>
+        <bundle>mvn:org.opennms.features.vaadin-components/core/${project.version}</bundle>
+    </feature>
+</features>

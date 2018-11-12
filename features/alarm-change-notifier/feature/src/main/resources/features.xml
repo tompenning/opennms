@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="alarm-change-notifier" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <feature name="alarm-change-notifier" version="${project.version}" description="alarm-change-notifier">
+        <details>Feature definition for alarm-change-notifier</details>
+        <bundle>mvn:com.impossibl.pgjdbc-ng/pgjdbc-ng/${pgjdbc-ng-version}</bundle>
+        <bundle>mvn:io.netty/netty-common/${netty4Version}</bundle>
+        <bundle>mvn:io.netty/netty-transport/${netty4Version}</bundle>
+        <bundle>mvn:io.netty/netty-buffer/${netty4Version}</bundle>
+        <bundle>mvn:io.netty/netty-handler/${netty4Version}</bundle>
+        <bundle>mvn:io.netty/netty-resolver/${netty4Version}</bundle>
+        <bundle>mvn:io.netty/netty-codec/${netty4Version}</bundle>
+        <bundle>mvn:org.opennms.plugins/alarm-change-notifier.pg-jdbc-utils/${project.version}</bundle>
+        <bundle>mvn:org.opennms.plugins/alarm-change-notifier.main-module/${project.version}</bundle>
+        <bundle>mvn:org.opennms.plugins/alarm-change-notifier.product-descriptor/${project.version}</bundle>
+        <bundle>mvn:com.googlecode.json-simple/json-simple/${json-simpleVersion}</bundle>
+    </feature>
+</features>

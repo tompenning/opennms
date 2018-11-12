@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features name="vaadin-opennms-pluginmanager" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+    <repository>mvn:org.opennms.plugins/org.opennms.plugin.licencemanager/${pluginmanagerVersion}/xml/features</repository>
+    <repository>mvn:org.opennms.plugins/org.opennms.plugin.featuremanager/${pluginmanagerVersion}/xml/features</repository>
+    <!-- TODO MVR verify this ... -->
+    <feature name="vaadin-opennms-pluginmanager" version="${project.version}" description="OpenNMS :: Plugins :: Admin UI">
+        <details>OpenNMS Vaadin Administration UI for installing Plugin modules.</details>
+        <feature>opennms-core</feature>
+        <feature>vaadin</feature>
+        <feature>org.opennms.plugin.licencemanager</feature>
+        <feature>org.opennms.plugin.featuremanager</feature>
+        <bundle>mvn:org.opennms.plugins/vaadin-opennms-pluginmanager/${project.version}</bundle>
+        <bundle>mvn:org.opennms.plugins/org.opennms.plugin.pluginmanager.pluginmanager-core/${pluginmanagerVersion}</bundle>
+        <bundle>mvn:org.opennms.features.vaadin-components/core/${project.version}</bundle>
+    </feature>
+    <feature name="org.opennms.plugin.licencemanager" version="${pluginmanagerVersion}" description="org.opennms.plugin.licencemanager">
+        <feature>http</feature>
+        <feature>http-whiteboard</feature>
+        <bundle start-level="50" dependency="true">mvn:com.sun.jersey/jersey-server/1.19.3</bundle>
+        <bundle start-level="50" dependency="true">mvn:com.sun.jersey/jersey-servlet/1.19.3</bundle>
+        <bundle start-level="50" dependency="true">mvn:com.sun.jersey/jersey-core/1.19.3</bundle>
+        <bundle start-level="50" dependency="true">mvn:com.sun.jersey/jersey-client/1.19.3</bundle>
+        <bundle start-level="50" dependency="true">mvn:javax.ws.rs/jsr311-api/1.1.1</bundle>
+        <bundle>mvn:org.opennms.plugins/org.opennms.plugin.licencemanager/${pluginmanagerVersion}</bundle>
+    </feature>
+    <feature name="org.opennms.plugin.featuremanager" version="${pluginmanagerVersion}" description="org.opennms.plugin.featuremanager">
+        <feature>http</feature>
+        <feature>http-whiteboard</feature>
+        <bundle start-level="50" dependency="true">mvn:com.sun.jersey/jersey-server/1.19.3</bundle>
+        <bundle start-level="50" dependency="true">mvn:com.sun.jersey/jersey-servlet/1.19.3</bundle>
+        <bundle start-level="50" dependency="true">mvn:com.sun.jersey/jersey-core/1.19.3</bundle>
+        <bundle start-level="50" dependency="true">mvn:com.sun.jersey/jersey-client/1.19.3</bundle>
+        <bundle start-level="50" dependency="true">mvn:javax.ws.rs/jsr311-api/1.1.1</bundle>
+        <bundle>mvn:org.opennms.plugins/org.opennms.plugin.featuremanager/${pluginmanagerVersion}</bundle>
+    </feature>
+</features>
