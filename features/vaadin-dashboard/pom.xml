@@ -98,18 +98,25 @@
             </plugin>
 
             <plugin>
-                <groupId>org.opennms.maven.plugins</groupId>
-                <artifactId>features-maven-plugin</artifactId>
-                <configuration>
-                    <bundles>
-                        <bundle>mvn:org.opennms.features/vaadin-dashboard/${project.version}</bundle>
-                        <bundle>wrap:mvn:org.vaadin.addons/dragdroplayouts/1.4.2</bundle>
-                    </bundles>
-                    <features>
-                        <feature>opennms-core</feature>
-                        <feature>vaadin</feature>
-                    </features>
-                </configuration>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>target/classes/features.xml</file>
+                                    <type>xml</type>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
 

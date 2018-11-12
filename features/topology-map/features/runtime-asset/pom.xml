@@ -14,27 +14,25 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.opennms.maven.plugins</groupId>
-        <artifactId>features-maven-plugin</artifactId>
-        <configuration>
-          <!-- This option will recursively pull the all of the <repository> references inside all of -->
-          <!-- the referenced repositories and put all of their features into -->
-          <!-- a single <features> repository. -->
-          <importRepositories>true</importRepositories>
-          <!-- plugin fails if this empty exclusions not present -->
-          <importRepositoryExclusions>
-            <value>vaadin</value>
-            <value>opennms-topology-api</value>
-            <value>opennms-topology-runtime-base</value>
-          </importRepositoryExclusions>
-          <repositories>
-            <repository>mvn:${project.groupId}/opennms-topology-runtime-base/${project.version}/xml/features</repository>
-          </repositories>
-          <features>
-            <feature>opennms-topology-runtime-graphml</feature>
-            <feature>opennms-topology-runtime-base</feature>
-          </features>
-        </configuration>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-artifacts</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attach-artifact</goal>
+            </goals>
+            <configuration>
+              <artifacts>
+                <artifact>
+                  <file>target/classes/features.xml</file>
+                  <type>xml</type>
+                </artifact>
+              </artifacts>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

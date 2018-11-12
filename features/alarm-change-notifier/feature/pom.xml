@@ -17,19 +17,22 @@
 
     <plugins>
       <plugin>
-        <groupId>org.opennms.maven.plugins</groupId>
-        <artifactId>features-maven-plugin</artifactId>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
         <executions>
           <execution>
-            <id>features.xml</id>
-            <phase>process-resources</phase>
+            <id>attach-artifacts</id>
+            <phase>package</phase>
             <goals>
-              <goal>generate-features-xml</goal>
+              <goal>attach-artifact</goal>
             </goals>
             <configuration>
-              <bundles>
-                <!-- <bundle>mvn:com.impossibl.pgjdbc-ng/pgjdbc-ng/${pgjdbc-ng-version}</bundle> -->
-              </bundles>
+              <artifacts>
+                <artifact>
+                  <file>target/classes/features.xml</file>
+                  <type>xml</type>
+                </artifact>
+              </artifacts>
             </configuration>
           </execution>
         </executions>

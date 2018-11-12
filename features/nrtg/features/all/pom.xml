@@ -14,18 +14,25 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.opennms.maven.plugins</groupId>
-        <artifactId>features-maven-plugin</artifactId>
-        <configuration>
-          <repositories>
-            <repository>mvn:org.opennms.osgi.features.nrtg/osgi-nrtg-jms/${project.version}/xml/features</repository>
-            <repository>mvn:org.opennms.osgi.features.nrtg/osgi-nrtg-local/${project.version}/xml/features</repository>
-          </repositories>
-          <features>
-            <feature>osgi-nrtg-jms</feature>
-            <feature>osgi-nrtg-local</feature>
-          </features>
-        </configuration>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-artifacts</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attach-artifact</goal>
+            </goals>
+            <configuration>
+              <artifacts>
+                <artifact>
+                  <file>target/classes/features.xml</file>
+                  <type>xml</type>
+                </artifact>
+              </artifacts>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

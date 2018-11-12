@@ -96,24 +96,25 @@
             </plugin>
 
 			<plugin>
-				<groupId>org.opennms.maven.plugins</groupId>
-				<artifactId>features-maven-plugin</artifactId>
-				<configuration>
-					<features>
-						<feature>opennms-core-web</feature>
-						<feature>vaadin</feature>
-						<feature>geolocation</feature>
-					</features>
-					<bundles>
-						<bundle>mvn:org.opennms.features/vaadin-node-maps/${project.version}</bundle>
-						<bundle>mvn:org.apache.httpcomponents/httpcore-osgi/${httpcoreVersion}</bundle>
-						<bundle>mvn:org.apache.httpcomponents/httpclient-osgi/${httpclientVersion}</bundle>
-						<bundle>mvn:org.opennms.core/org.opennms.core.web/${project.version}</bundle>
-						<bundle>mvn:org.opennms.features.geocoder/org.opennms.features.geocoder.google/${project.version}</bundle>
-						<bundle>mvn:org.opennms.features.geocoder/org.opennms.features.geocoder.nominatim/${project.version}</bundle>
-						<bundle>mvn:org.opennms.features.geolocation/org.opennms.features.geolocation.api/${project.version}</bundle>
-					</bundles>
-				</configuration>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-artifacts</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact>
+									<file>target/classes/features.xml</file>
+									<type>xml</type>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 
