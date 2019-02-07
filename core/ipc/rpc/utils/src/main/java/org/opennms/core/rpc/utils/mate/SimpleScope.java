@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SimpleScope implements Scope {
     private final Map<ContextKey, String> values;
@@ -53,5 +54,14 @@ public class SimpleScope implements Scope {
     @Override
     public Set<ContextKey> keys() {
         return this.values.keySet();
+    }
+
+    public static SimpleScope singeContext(final String context, final Map<String, String> values) {
+        return new SimpleScope(
+                values.entrySet().stream()
+                .collect(Collectors.toMap(
+                        e -> new ContextKey(context, e.getKey()),
+                        e -> e.getValue())
+                ));
     }
 }
