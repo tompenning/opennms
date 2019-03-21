@@ -30,8 +30,8 @@ package org.opennms.netmgt.poller.pollables;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -137,6 +137,7 @@ public class PollableServiceConfigIT {
                     .withAttributes(any())
                     .withAdaptor(any())
                     .withAdaptor(any())
+                    .withPatternVariables(any())
                     .execute()
         ).thenReturn(future);
 
@@ -163,6 +164,6 @@ public class PollableServiceConfigIT {
         PollStatus pollStatus = psc.poll();
 
         // Verify
-        assertThat(pollStatus.isUnknown(), is(true));
+        assertTrue(pollStatus.isUnknown());
     }
 }
