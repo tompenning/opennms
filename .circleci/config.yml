@@ -1,0 +1,70 @@
+version: 2.1
+
+executors:
+  build-executor:
+    docker:
+      - image: opennms/build-env:1.0-b6
+
+commands:
+  cached-checkout:
+      description: "Checkout with caching"
+      steps:
+        - restore_cache:
+            keys:
+              - source-v1-{{ .Branch }}-{{ .Revision }}
+              - source-v1-{{ .Branch }}-
+              - source-v1-
+        - checkout
+        - save_cache:
+            key: source-v1-{{ .Branch }}-{{ .Revision }}
+            paths:
+              - ".git"
+
+  restore-maven-cache:
+      description: "Calculate cache key and restore cache"
+      steps:
+        - run: 
+            name: Calculate cache key from pom files
+            command: |
+              find . -type f -name "pom.xml" -exec sha256sum "{}" \; >> maven-dependency-cache.key
+        - restore_cache:
+            keys:
+              - maven-dependencies-v1-{{ checksum "maven-dependency-cache.key" }}
+              - maven-dependencies-v1-
+
+  save-maven-cache:
+    description: "Save Maven dependency cache"
+    steps:
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-dependencies-v1-{{ checksum "maven-dependency-cache.key" }}
+
+workflows:
+  build-deploy:
+    jobs:
+      - build
+
+jobs:
+  build:
+    executor: build-executor
+    # Building currently requires the xlarge containers in order for the webpack compilation
+    # in the core/web-assets module to complete reliably
+    resource_class: xlarge
+    steps:
+      - cached-checkout
+      - restore-maven-cache
+      - run:
+          name: Compile
+          command: |
+            mvn clean -DskipTests=true
+            ./compile.pl -DskipTests=true -Dbuild.skip.tarball=true
+      - run:
+          name: Build RPMs
+          command: |
+            ./makerpm.sh -a -d
+      - save-maven-cache
+      - store_artifacts:
+          path: ~/project/target/rpm/RPMS/noarch
+          destination: rpms
+
