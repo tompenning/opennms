@@ -61,6 +61,8 @@ public final class AlarmFeedback {
 
     private final FeedbackType feedbackType;
 
+    private final Boolean isRootCause;
+
     private final String reason;
 
     private final String user;
@@ -72,6 +74,7 @@ public final class AlarmFeedback {
         this.situationFingerprint = builder.situationFingerprint;
         this.alarmKey = builder.alarmKey;
         this.feedbackType = builder.feedbackType;
+        this.isRootCause = builder.isRootCause;
         this.reason = builder.reason;
         this.user = builder.user;
         this.timestamp = builder.timestamp;
@@ -82,6 +85,7 @@ public final class AlarmFeedback {
         private String situationFingerprint;
         private String alarmKey;
         private AlarmFeedback.FeedbackType feedbackType;
+        private Boolean isRootCause;
         private String reason;
         private String user;
         private Long timestamp;
@@ -108,6 +112,11 @@ public final class AlarmFeedback {
 
         public Builder withFeedbackType(AlarmFeedback.FeedbackType feedbackType) {
             this.feedbackType = feedbackType;
+            return this;
+        }
+
+        public Builder isRootCause(Boolean isRootCause) {
+            this.isRootCause = isRootCause;
             return this;
         }
 
@@ -154,6 +163,10 @@ public final class AlarmFeedback {
 
     public FeedbackType getFeedbackType() {
         return feedbackType;
+    }
+
+    public boolean isRootCause() {
+        return isRootCause != null && isRootCause;
     }
 
     public String getReason() {
