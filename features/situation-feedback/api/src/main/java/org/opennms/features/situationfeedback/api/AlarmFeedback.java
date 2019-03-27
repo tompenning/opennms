@@ -28,8 +28,11 @@
 
 package org.opennms.features.situationfeedback.api;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.base.Enums;
 
@@ -42,6 +45,7 @@ public final class AlarmFeedback {
     public enum FeedbackType {
         FALSE_POSITIVE, // Alarm does not belong in this Situation
         FALSE_NEGATIVE, // Alarm was missing from this Situation
+        CREATE_SITUATION, // Alarm should be correlated in a new Situation
         CORRECT, // Alarm is correctly correlated
         UNKNOWN;
 
@@ -61,9 +65,11 @@ public final class AlarmFeedback {
 
     private final FeedbackType feedbackType;
 
-    private final Boolean isRootCause;
+    private final Boolean rootCause;
 
     private final String reason;
+
+    private final List<String> tags = new ArrayList<>();;
 
     private final String user;
 
@@ -74,8 +80,9 @@ public final class AlarmFeedback {
         this.situationFingerprint = builder.situationFingerprint;
         this.alarmKey = builder.alarmKey;
         this.feedbackType = builder.feedbackType;
-        this.isRootCause = builder.isRootCause;
+        this.rootCause = builder.rootCause;
         this.reason = builder.reason;
+        this.tags.addAll(builder.tags);
         this.user = builder.user;
         this.timestamp = builder.timestamp;
     }
@@ -85,8 +92,10 @@ public final class AlarmFeedback {
         private String situationFingerprint;
         private String alarmKey;
         private AlarmFeedback.FeedbackType feedbackType;
-        private Boolean isRootCause;
+        @JsonProperty(value="rootCause")
+        private Boolean rootCause;
         private String reason;
+        private List<String> tags = new ArrayList<>();
         private String user;
         private Long timestamp;
 
@@ -115,13 +124,18 @@ public final class AlarmFeedback {
             return this;
         }
 
-        public Builder isRootCause(Boolean isRootCause) {
-            this.isRootCause = isRootCause;
+        public Builder isRootCause(Boolean rootCause) {
+            this.rootCause = rootCause;
             return this;
         }
 
         public Builder withReason(String reason) {
             this.reason = reason;
+            return this;
+        }
+
+        public Builder withTags(List<String> tags) {
+            this.tags.addAll(tags);
             return this;
         }
 
@@ -165,8 +179,8 @@ public final class AlarmFeedback {
         return feedbackType;
     }
 
-    public boolean isRootCause() {
-        return isRootCause != null && isRootCause;
+    public Boolean getRootCause() {
+        return rootCause;
     }
 
     public String getReason() {

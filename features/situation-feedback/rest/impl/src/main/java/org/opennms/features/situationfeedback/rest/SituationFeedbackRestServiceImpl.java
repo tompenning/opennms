@@ -52,7 +52,7 @@ public class SituationFeedbackRestServiceImpl implements SituationFeedbackRestSe
 
     private final FeedbackRepository repository;
 
-    public SituationFeedbackRestServiceImpl(AlarmDao alarmDao, AlarmEntityNotifier alarmEntityNotifier, FeedbackRepository feedbackRepository, TransactionOperations transactionOperations) {
+    public SituationFeedbackRestServiceImpl(AlarmDao alarmDao, FeedbackRepository feedbackRepository) {
         this.alarmDao = Objects.requireNonNull(alarmDao);
         this.repository = Objects.requireNonNull(feedbackRepository);
     }
