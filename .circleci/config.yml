@@ -31,6 +31,10 @@ commands:
             keys:
               - maven-dependencies-v1-{{ checksum "maven-dependency-cache.key" }}
               - maven-dependencies-v1-
+        - run:
+            name: Remove OpenNMS artifacts from cache
+            command: |
+              rm -rf ~/.m2/repository/org/opennms
 
   save-maven-cache:
     description: "Save Maven dependency cache"
