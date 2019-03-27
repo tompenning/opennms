@@ -29,8 +29,8 @@ commands:
               find . -type f -name "pom.xml" -exec sha256sum "{}" \; >> maven-dependency-cache.key
         - restore_cache:
             keys:
-              - maven-dependencies-v1-{{ checksum "maven-dependency-cache.key" }}
-              - maven-dependencies-v1-
+              - maven-dependencies-v2-{{ checksum "maven-dependency-cache.key" }}
+              - maven-dependencies-v2-
         - run:
             name: Remove OpenNMS artifacts from cache
             command: |
@@ -42,7 +42,7 @@ commands:
       - save_cache:
           paths:
             - ~/.m2
-          key: maven-dependencies-v1-{{ checksum "maven-dependency-cache.key" }}
+          key: maven-dependencies-v2-{{ checksum "maven-dependency-cache.key" }}
 
 workflows:
   build-deploy:
