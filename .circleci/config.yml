@@ -87,7 +87,6 @@ jobs:
       - attach_workspace:
           at: ~/
       - restore-maven-cache
-      - setup_remote_docker
       - run:
           name: Smoke Tests
           command: |
