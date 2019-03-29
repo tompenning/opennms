@@ -48,7 +48,7 @@ workflows:
   build-deploy:
     jobs:
       - build
-      - smoke-test
+      - smoke-test:
           requires:
             - build
 
