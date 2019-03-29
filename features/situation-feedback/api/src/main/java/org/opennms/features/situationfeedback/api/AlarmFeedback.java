@@ -80,8 +80,8 @@ public final class AlarmFeedback {
         this.situationFingerprint = builder.situationFingerprint;
         this.alarmKey = builder.alarmKey;
         this.feedbackType = builder.feedbackType;
-        this.rootCause = builder.rootCause;
         this.reason = builder.reason;
+        this.rootCause = builder.rootCause != null && builder.rootCause;
         this.tags.addAll(builder.tags);
         this.user = builder.user;
         this.timestamp = builder.timestamp;
@@ -92,9 +92,10 @@ public final class AlarmFeedback {
         private String situationFingerprint;
         private String alarmKey;
         private AlarmFeedback.FeedbackType feedbackType;
+
+        private String reason;
         @JsonProperty(value="rootCause")
         private Boolean rootCause;
-        private String reason;
         private List<String> tags = new ArrayList<>();
         private String user;
         private Long timestamp;
@@ -187,6 +188,10 @@ public final class AlarmFeedback {
         return reason;
     }
 
+    public List<String> getTags() {
+        return tags;
+    }
+
     public String getUser() {
         return user;
     }
@@ -206,12 +211,14 @@ public final class AlarmFeedback {
                 Objects.equals(alarmKey, that.alarmKey) &&
                 feedbackType == that.feedbackType &&
                 Objects.equals(reason, that.reason) &&
+                Objects.equals(rootCause, that.rootCause) &&
+                Objects.equals(tags, that.tags) &&
                 Objects.equals(user, that.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(situationKey, situationFingerprint, alarmKey, feedbackType, reason, user, timestamp);
+        return Objects.hash(situationKey, situationFingerprint, alarmKey, feedbackType, reason, rootCause, tags, user, timestamp);
     }
 
     @Override
@@ -222,6 +229,8 @@ public final class AlarmFeedback {
                 ", alarmKey='" + alarmKey + '\'' +
                 ", feedbackType=" + feedbackType +
                 ", reason='" + reason + '\'' +
+                ", rootCause='" + rootCause + '\'' +
+                ", tags='" + tags + '\'' +
                 ", user='" + user + '\'' +
                 ", timestamp=" + timestamp +
                 '}';
