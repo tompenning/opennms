@@ -48,6 +48,9 @@ workflows:
   build-deploy:
     jobs:
       - build
+      - smoke-test
+          requires:
+            - build
 
 jobs:
   build:
@@ -63,12 +66,28 @@ jobs:
           command: |
             mvn clean -DskipTests=true
             ./compile.pl -DskipTests=true -Dbuild.skip.tarball=true
-      - run:
-          name: Build RPMs
-          command: |
-            ./makerpm.sh -a -d
+            #      - run:
+            #          name: Build RPMs
+            #          command: |
+            #            ./makerpm.sh -a -d
       - save-maven-cache
-      - store_artifacts:
-          path: ~/project/target/rpm/RPMS/noarch
-          destination: rpms
+        #- store_artifacts:
+        #    path: ~/project/target/rpm/RPMS/noarch
+        #    destination: rpms
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+
+  smoke-test:
+    executor: build-executor
+    steps:
+      - attach_workspace:
+          at: ~/
+      - restore-maven-cache
+      - setup_remote_docker
+      - run:
+          name: Smoke Tests
+          command: |
+            .circleci/scripts/smoke.sh
 
