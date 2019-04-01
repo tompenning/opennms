@@ -98,4 +98,11 @@
         <reference-listener bind-method="onBind" unbind-method="onUnbind" ref="elasticFeedbackRepository"/>
     </reference-list>
 
+    <!-- Health Check -->
+    <service interface="org.opennms.core.health.api.HealthCheck">
+        <bean class="org.opennms.features.situationfeedback.elastic.ElasticHealthCheck" >
+            <argument ref="jestClient"/>
+        </bean>
+    </service>
+
 </blueprint>
