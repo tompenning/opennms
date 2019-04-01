@@ -86,6 +86,12 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
+      # Link root user's m2 repo from the cache with our user's m2 repo (the circleci user)
+      - run:
+          name: Link maven repo with cache
+          command: |
+            sudo chmod 777 /root
+            ln -s /root/.m2 ~/.m2
       - restore-maven-cache
       - run:
           name: Smoke Tests
