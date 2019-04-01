@@ -160,7 +160,6 @@ public class ElasticFeedbackRepository implements FeedbackRepository {
         if (terms == null) {
             return Collections.emptyList();
         }
-        // TODO - possibly add .limit(N) at some time in the future
         return terms.getBuckets().stream().map(TermsAggregation.Entry::getKey).collect(Collectors.toList());
     }
 

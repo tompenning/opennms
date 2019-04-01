@@ -92,7 +92,6 @@ public final class AlarmFeedback {
         private String situationFingerprint;
         private String alarmKey;
         private AlarmFeedback.FeedbackType feedbackType;
-
         private String reason;
         @JsonProperty(value="rootCause")
         private Boolean rootCause;
