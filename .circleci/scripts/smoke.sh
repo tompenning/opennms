@@ -18,14 +18,15 @@ docker pull elasticsearch:5-alpine
 
 echo "#### Building dependencies"
 cd ~/project
-mvn -DupdatePolicy=never -DskipTests=true -DskipITs=true -P'!checkstyle' -Psmoke --projects :smoke-test --also-make clean install
+mvn -DupdatePolicy=never -DskipTests=true -DskipITs=true -P'!checkstyle' -Psmoke --projects :smoke-test --also-make install
 
 echo "#### Executing tests"
 cd ~/project/smoke-test
 # Iterate through the tests instead of running a single command, since I can't find a way to make the later stop
 # after the first failure
-for TEST_CLASS in $(python ../.circleci/scripts/find-tests.py --use-class-names . | circleci tests split)
+pyenv local 3.5.2
+for TEST_CLASS in $(python3 ../.circleci/scripts/find-tests.py --use-class-names . | circleci tests split)
 do
   echo "###### Testing: ${TEST_CLASS}"
-  mvn -N -Dorg.opennms.smoketest.docker=true -DskipTests=false -DskipITs=false -DfailIfNoTests=false -Dit.test=$TEST_CLASS integration-test
+  mvn -N -Dorg.opennms.smoketest.docker=true -DskipTests=false -DskipITs=false -DfailIfNoTests=false -Dit.test=$TEST_CLASS verify
 done
