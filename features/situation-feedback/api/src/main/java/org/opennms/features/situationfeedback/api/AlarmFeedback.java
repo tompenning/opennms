@@ -65,7 +65,7 @@ public final class AlarmFeedback {
 
     private final FeedbackType feedbackType;
 
-    private final Boolean rootCause;
+    private final boolean rootCause;
 
     private final String reason;
 
@@ -179,7 +179,7 @@ public final class AlarmFeedback {
         return feedbackType;
     }
 
-    public Boolean getRootCause() {
+    public boolean getRootCause() {
         return rootCause;
     }
 

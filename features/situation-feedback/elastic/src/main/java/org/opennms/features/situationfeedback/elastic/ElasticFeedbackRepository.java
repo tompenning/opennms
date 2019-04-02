@@ -135,7 +135,7 @@ public class ElasticFeedbackRepository implements FeedbackRepository {
                 "    \"terms\": {\n" + 
                 "      \"terms\": {\n" + 
                 "        \"field\": \"tags\",\n" + 
-                "        \"include\": \"" + prefix + ".*\"\n" + 
+                "        \"include\": \"" + gson.toJson(prefix) + ".*\"\n" + 
                 "      }\n" + 
                 "    }\n" + 
                 "  }\n" + 
