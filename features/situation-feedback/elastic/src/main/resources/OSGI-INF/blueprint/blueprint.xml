@@ -100,7 +100,7 @@
 
     <!-- Health Check -->
     <service interface="org.opennms.core.health.api.HealthCheck">
-        <bean class="org.opennms.features.situationfeedback.elastic.ElasticHealthCheck" >
+        <bean class="org.opennms.features.situationfeedback.elastic.SituationFeedbackElasticHealthCheck" >
             <argument ref="jestClient"/>
         </bean>
     </service>

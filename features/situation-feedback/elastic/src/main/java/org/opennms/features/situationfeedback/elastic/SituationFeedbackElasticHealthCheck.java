@@ -27,45 +27,14 @@
  *******************************************************************************/
 package org.opennms.features.situationfeedback.elastic;
 
-import java.io.IOException;
-import java.util.Objects;
-
-import org.opennms.core.health.api.Context;
-import org.opennms.core.health.api.HealthCheck;
-import org.opennms.core.health.api.Response;
-import org.opennms.core.health.api.Status;
-
-import com.google.common.base.Strings;
+import org.opennms.plugins.elasticsearch.rest.ElasticHealthCheck;
 
 import io.searchbox.client.JestClient;
-import io.searchbox.client.JestResult;
-import io.searchbox.core.Ping;
 
-public class ElasticHealthCheck implements HealthCheck {
+public class SituationFeedbackElasticHealthCheck extends ElasticHealthCheck {
 
-    private final JestClient client;
-
-    public ElasticHealthCheck(JestClient jestClient) {
-        this.client = Objects.requireNonNull(jestClient);
+    public SituationFeedbackElasticHealthCheck(JestClient jestClient) {
+        super(jestClient, "Situation Feedback");
     }
 
-    @Override
-    public String getDescription() {
-        return "Connecting to ElasticSearch ReST API (Situation-Feedback)";
-    }
-
-    @Override
-    public Response perform(Context context) {
-        final Ping ping = new Ping.Builder().build();
-        try {
-            final JestResult result = client.execute(ping);
-            if (result.isSucceeded() && Strings.isNullOrEmpty(result.getErrorMessage())) {
-                return new Response(Status.Success);
-            } else {
-                return new Response(Status.Failure, Strings.isNullOrEmpty(result.getErrorMessage()) ? null : result.getErrorMessage());
-            }
-        } catch (IOException e) {
-            return new Response(e);
-        }
-    }
 }
