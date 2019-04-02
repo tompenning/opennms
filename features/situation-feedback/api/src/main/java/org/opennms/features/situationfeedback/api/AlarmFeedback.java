@@ -69,7 +69,7 @@ public final class AlarmFeedback {
 
     private final String reason;
 
-    private final List<String> tags = new ArrayList<>();;
+    private final List<String> tags = new ArrayList<>();
 
     private final String user;
 
