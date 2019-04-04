@@ -23,10 +23,19 @@ var onmsNode = {
     'descr': 'eth0',
     'snmp-primary': 'P',
     'status': '1',
+    'meta-data': [
+      {'context': 'requisition', 'key': 'foo', 'value': 'bar'},
+      {'context': 'external1', 'key': 'kickit', 'value': 'lickit'},
+    ],
     'monitored-service': [{
-      'service-name': 'ICMP'
+      'service-name': 'ICMP',
+      'meta-data': [
+        {'context': 'requisition', 'key': 'foo', 'value': 'bar'},
+        {'context': 'external1', 'key': 'kickit', 'value': 'lickit'},
+      ],
     },{
-      'service-name': 'SNMP'
+      'service-name': 'SNMP',
+      'meta-data': [],
     }]
   }],
   'asset': [{
@@ -38,7 +47,15 @@ var onmsNode = {
   }],
   'category': [{
     'name': 'Servers'
-  }]
+  }],
+  'meta-data': [
+    {'context': 'requisition', 'key': 'foo', 'value': 'bar'},
+    {'context': 'requisition', 'key': 'bar', 'value': 'foo'},
+    {'context': 'external1', 'key': 'kickit', 'value': 'mumumu'},
+    {'context': 'external1', 'key': 'lickit', 'value': 'mimimi'},
+    {'context': 'external2', 'key': 'first', 'value': 'momomo'},
+    {'context': 'external2', 'key': 'second', 'value': 'mamama'},
+  ]
 };
 
 test('Model: RequisitionsNode: verify object translation', function () {
@@ -52,10 +69,32 @@ test('Model: RequisitionsNode: verify object translation', function () {
   expect(reqNode.categories[0].name).toBe('Servers');
   expect(reqNode.interfaces.length).toBe(1);
   expect(reqNode.interfaces[0].ipAddress).toBe('10.0.0.1');
+  expect(reqNode.interfaces[0].requisitionMetaData[0].key).toBe('foo');
+  expect(reqNode.interfaces[0].requisitionMetaData[0].value).toBe('bar');
+  expect(reqNode.interfaces[0].otherMetaData['external1'][0].key).toBe('kickit');
+  expect(reqNode.interfaces[0].otherMetaData['external1'][0].value).toBe('lickit');
   expect(reqNode.interfaces[0].services.length).toBe(2);
   expect(reqNode.interfaces[0].services[0].name).toBe('ICMP');
+  expect(reqNode.interfaces[0].services[0].requisitionMetaData[0].key).toBe('foo');
+  expect(reqNode.interfaces[0].services[0].requisitionMetaData[0].value).toBe('bar');
+  expect(reqNode.interfaces[0].services[0].otherMetaData['external1'][0].key).toBe('kickit');
+  expect(reqNode.interfaces[0].services[0].otherMetaData['external1'][0].value).toBe('lickit');
   expect(reqNode.assets[1].value).toBe('Pittsboro');
+  expect(reqNode.requisitionMetaData[0].key).toBe('foo');
+  expect(reqNode.requisitionMetaData[0].value).toBe('bar');
+  expect(reqNode.requisitionMetaData[1].key).toBe('bar');
+  expect(reqNode.requisitionMetaData[1].value).toBe('foo');
+  expect(reqNode.otherMetaData['external1'][0].key).toBe('kickit');
+  expect(reqNode.otherMetaData['external1'][0].value).toBe('mumumu');
+  expect(reqNode.otherMetaData['external1'][1].key).toBe('lickit');
+  expect(reqNode.otherMetaData['external1'][1].value).toBe('mimimi');
+  expect(reqNode.otherMetaData['external2'][0].key).toBe('first');
+  expect(reqNode.otherMetaData['external2'][0].value).toBe('momomo');
+  expect(reqNode.otherMetaData['external2'][1].key).toBe('second');
+  expect(reqNode.otherMetaData['external2'][1].value).toBe('mamama');
+
   var genNode = reqNode.getOnmsRequisitionNode();
   expect(genNode).not.toBe(null);
   expect(angular.equals(genNode, onmsNode)).toBe(true);
 });
+
