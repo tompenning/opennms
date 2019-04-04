@@ -172,7 +172,7 @@ public class FeedbackDocument {
                 .withAlarmKey(doc.alarmKey)
                 .withFeedbackType(FeedbackType.valueOfOrUnknown(doc.feedbackType))
                 .withReason(doc.reason)
-                .isRootCause(doc.isRootCause)
+                .withRootCause(doc.isRootCause)
                 .withUser(doc.user)
                 .withTags(doc.tags)
                 .withTimestamp(doc.timestamp)

@@ -124,7 +124,7 @@ public final class AlarmFeedback {
             return this;
         }
 
-        public Builder isRootCause(Boolean rootCause) {
+        public Builder withRootCause(Boolean rootCause) {
             this.rootCause = rootCause;
             return this;
         }
