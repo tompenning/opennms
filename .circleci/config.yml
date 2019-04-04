@@ -4,6 +4,9 @@ executors:
   build-executor:
     docker:
       - image: opennms/build-env:1.0-b6
+  docker-executor:
+    docker:
+      - image: docker:18
   smoke-test-executor:
     machine: true
 
@@ -46,13 +49,49 @@ commands:
             - ~/.m2
           key: maven-dependencies-v2-{{ checksum "maven-dependency-cache.key" }}
 
+  dockerhub-login:
+    description: "Connect to DockerHub"
+    steps:
+      - run:
+          name: Login to DockerHub
+          command: |
+            docker login -u ${DOCKERHUB_LOGIN} -p ${DOCKERHUB_PASS}
+
+  bash-alpine:
+    description: "Add bash support in Alpine based images"
+    steps:
+      - run:
+          name: Add bash support
+          command: |
+            apk add --no-cache bash
+
 workflows:
   build-deploy:
     jobs:
       - build
-      - smoke-test:
+      - build-horizon-oci:
           requires:
             - build
+      - build-minion-oci:
+          requires:
+            - build
+      - build-sentinel-oci:
+          requires:
+            - build
+              #- publish-horizon-oci:
+              #    requires:
+              #      - build-horizon-oci
+              #- publish-minion-oci:
+              #    requires:
+              #      - build-minion-oci
+              #- publish-sentinel-oci:
+              #    requires:
+              #      - build-sentinel-oci
+      - smoke-test:
+          requires:
+            - build-horizon-oci
+            - build-minion-oci
+            - build-sentinel-oci
 
 jobs:
   build:
@@ -68,14 +107,77 @@ jobs:
           command: |
             mvn clean -DskipTests=true
             ./compile.pl -DskipTests=true -Dbuild.skip.tarball=true
-            #      - run:
-            #          name: Build RPMs
-            #          command: |
-            #            ./makerpm.sh -a -d
+      - run:
+          name: Build RPMs
+          command: |
+            ./makerpm.sh -a -d
       - save-maven-cache
-        #- store_artifacts:
-        #    path: ~/project/target/rpm/RPMS/noarch
-        #    destination: rpms
+      - store_artifacts:
+          path: ~/project/target/rpm/RPMS/noarch
+          destination: rpms
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+
+  build-horizon-oci:
+    executor: docker-executor
+    steps:
+      - attach_workspace:
+          at: ~/
+      - setup_remote_docker
+      - bash-alpine
+      - run:
+          name: Fetch RPM artifacts and build Horizon container image
+          command: |
+            cd opennms-container/horizon
+            ./fetch-rpms.sh
+            ./build_container_image.sh
+      - store_artifacts:
+          path: ~/project/opennms-container/horizon/images/container.oci
+          destination: horizon.oci
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+
+  build-minion-oci:
+    executor: docker-executor
+    steps:
+      - attach_workspace:
+          at: ~/
+      - setup_remote_docker
+      - bash-alpine
+      - run:
+          name: Fetch RPM artifacts and build Minion container image
+          command: |
+            cd opennms-container/minion
+            ./fetch-rpms.sh
+            ./build_container_image.sh
+      - store_artifacts:
+          path: ~/project/opennms-container/minion/images/container.oci
+          destination: minion.oci
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+
+  build-sentinel-oci:
+    executor: docker-executor
+    steps:
+      - attach_workspace:
+          at: ~/
+      - setup_remote_docker
+      - bash-alpine
+      - run:
+          name: Fetch RPM artifacts and build Sentinel container image
+          command: |
+            cd opennms-container/sentinel
+            ./fetch-rpms.sh
+            ./build_container_image.sh
+      - store_artifacts:
+          path: ~/project/opennms-container/sentinel/images/container.oci
+          destination: sentinel.oci
       - persist_to_workspace:
           root: ~/
           paths:
@@ -83,7 +185,6 @@ jobs:
 
   smoke-test:
     executor: smoke-test-executor
-    parallelism: 2
     steps:
       - attach_workspace:
           at: ~/
@@ -98,13 +199,51 @@ jobs:
           name: Smoke Tests
           command: |
             .circleci/scripts/smoke.sh
-      - run:
-          name: Gather test results
-          when: always
-          command: |
-            mkdir -p ~/test-results
-            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/ \;
-            find . -type f -regex ".*/target/failsafe-reports/.*xml" -exec cp {} ~/test-results/ \;
-      - store_test_results:
-          path: ~/test-results
 
+  publish-horizon-oci:
+    executor: docker-executor
+    steps:
+      - attach_workspace:
+          at: ~/
+      - setup_remote_docker
+      - bash-alpine
+      - dockerhub-login
+      - run:
+          name: Load Horizon OCI image, tag it and publish to registry
+          command: |
+            cd opennms-container/horizon
+            docker image load -i images/container.oci
+            ./tag.sh
+            ./publish.sh
+
+  publish-minion-oci:
+    executor: docker-executor
+    steps:
+      - attach_workspace:
+          at: ~/
+      - setup_remote_docker
+      - bash-alpine
+      - dockerhub-login
+      - run:
+          name: Load Minion OCI image, tag it and publish to registry
+          command: |
+            cd opennms-container/minion
+            docker image load -i images/container.oci
+            ./tag.sh
+            ./publish.sh
+
+  publish-sentinel-oci:
+    executor: docker-executor
+    steps:
+      - attach_workspace:
+          at: ~/
+      - setup_remote_docker
+      - bash-alpine
+      - dockerhub-login
+      - run:
+          name: Load Sentinel OCI image, tag it and publish to registry
+          command: |
+            cd opennms-container/sentinel
+            docker image load -i images/container.oci
+            ./tag.sh
+            ./publish.sh
