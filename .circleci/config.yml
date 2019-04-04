@@ -139,7 +139,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project
+            - project/opennms-container/horizon/images/
 
   build-minion-oci:
     executor: docker-executor
@@ -160,7 +160,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project
+            - project/opennms-container/minion/images/
 
   build-sentinel-oci:
     executor: docker-executor
@@ -181,7 +181,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project
+            - project/opennms-container/sentinel/images/
 
   smoke-test:
     executor: smoke-test-executor
