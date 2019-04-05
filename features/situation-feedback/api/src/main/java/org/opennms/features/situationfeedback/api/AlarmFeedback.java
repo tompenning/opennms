@@ -188,7 +188,7 @@ public final class AlarmFeedback {
     }
 
     public List<String> getTags() {
-        return tags;
+        return Collections.unmodifiableList(tags);
     }
 
     public String getUser() {
