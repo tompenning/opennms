@@ -197,21 +197,21 @@ jobs:
             sudo chmod 777 /root
             ln -s /root/.m2 ~/.m2
       - restore-maven-cache
-      - run:
-          name: Load Horizon OCI image
-          command: |
-           cd opennms-container/horizon
-           docker image load -i images/container.oci
-      - run:
-          name: Load Minion OCI image
-          command: |
-           cd opennms-container/minion
-           docker image load -i images/container.oci
-      - run:
-          name: Load Sentinel OCI image
-          command: |
-           cd opennms-container/sentinel
-           docker image load -i images/container.oci
+        #- run:
+        #    name: Load Horizon OCI image
+        #    command: |
+        #     cd opennms-container/horizon
+        #     docker image load -i images/container.oci
+        #- run:
+        #    name: Load Minion OCI image
+        #    command: |
+        #     cd opennms-container/minion
+        #     docker image load -i images/container.oci
+        #- run:
+        #    name: Load Sentinel OCI image
+        #    command: |
+        #     cd opennms-container/sentinel
+        #     docker image load -i images/container.oci
       - run:
           name: Smoke Tests
           command: |

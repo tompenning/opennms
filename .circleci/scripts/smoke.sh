@@ -22,6 +22,7 @@ docker pull elasticsearch:5-alpine
 docker pull docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.3
 docker pull cassandra:3.11
 docker pull polinux/snmpd:alpine
+docker pull selenium/standalone-firefox-debug:3.141.59
 
 echo "#### Building dependencies"
 cd ~/

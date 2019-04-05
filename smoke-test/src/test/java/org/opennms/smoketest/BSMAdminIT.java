@@ -91,7 +91,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
         public BsmAdminPage cancel() {
             final By by = By.id("cancelButton");
             testCase.clickElementUntilElementDisappears(by, by);
-            testCase.wait.until(ExpectedConditions.elementToBeClickable(By.id("createButton")));
+            testCase.wait.until(ExpectedConditions.elementToBeClickable(By.id("createButton"))::apply);
             return new BsmAdminPage(testCase);
         }
 
@@ -127,7 +127,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
                     .selectChildService(childServiceText)
                     .weight(weight)
                     .confirm();
-            testCase.wait.until(ExpectedConditions.elementToBeClickable(By.id("addEdgeButton")));
+            testCase.wait.until(ExpectedConditions.elementToBeClickable(By.id("addEdgeButton"))::apply);
             return editPage;
         }
 
@@ -142,7 +142,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
             .friendlyName(friendlyName)
             .weight(weight)
             .confirm();
-            testCase.wait.until(ExpectedConditions.elementToBeClickable(By.id("addEdgeButton")));
+            testCase.wait.until(ExpectedConditions.elementToBeClickable(By.id("addEdgeButton"))::apply);
             return this;
         }
 
@@ -186,7 +186,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
             .selectMapFunction(mapFunctionText)
             .weight(weight)
             .confirm();
-            testCase.wait.until(ExpectedConditions.elementToBeClickable(By.id("editEdgeButton")));
+            testCase.wait.until(ExpectedConditions.elementToBeClickable(By.id("editEdgeButton"))::apply);
             return this;
         }
 
@@ -197,7 +197,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
             .friendlyName(friendlyName)
             .weight(weight)
             .confirm();
-            testCase.wait.until(ExpectedConditions.elementToBeClickable(By.id("editEdgeButton")));
+            testCase.wait.until(ExpectedConditions.elementToBeClickable(By.id("editEdgeButton"))::apply);
             return this;
         }
 
@@ -211,7 +211,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
                     .selectMapFunction(mapFunctionText)
                     .weight(weight)
                     .confirm();
-            testCase.wait.until(ExpectedConditions.elementToBeClickable(By.id("addEdgeButton")));
+            testCase.wait.until(ExpectedConditions.elementToBeClickable(By.id("addEdgeButton"))::apply);
             return this;
         }
 
@@ -222,7 +222,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
             .selectMapFunction(mapFunctionText)
             .weight(weight)
             .confirm();
-            testCase.wait.until(ExpectedConditions.elementToBeClickable(By.id("addEdgeButton")));
+            testCase.wait.until(ExpectedConditions.elementToBeClickable(By.id("addEdgeButton"))::apply);
             return this;
         }
 
@@ -529,7 +529,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
 
             // Verify
             bsmAdminPage.openEditDialog(serviceName);
-            wait.until(pageContainsText("IPSvc: NodeA /127.0.0.1 CCC, Map: Increase, Weight: 1"));
+            wait.until(pageContainsText("IPSvc: NodeA /127.0.0.1 CCC, Map: Increase, Weight: 1")::apply);
 
             // Close dialog and delete BusinessService
             bsmAdminPageEditWindow.cancel();
@@ -562,7 +562,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
 
             // Verify
             bsmAdminPage.openEditDialog(serviceName);
-            wait.until(pageContainsText("Application: MyApplication, Map: Increase, Weight: 1"));
+            wait.until(pageContainsText("Application: MyApplication, Map: Increase, Weight: 1")::apply);
 
             // Close dialog and delete BusinessService
             bsmAdminPageEditWindow.cancel();
@@ -593,8 +593,8 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
         bsmAdminPageEditWindow.addChildEdge(serviceNames[2], "Ignore", 3);
 
         // verify
-        wait.until(pageContainsText(String.format("Child: %s, Map: Decrease, Weight: 2", serviceNames[1])));
-        wait.until(pageContainsText(String.format("Child: %s, Map: Ignore, Weight: 3", serviceNames[2])));
+        wait.until(pageContainsText(String.format("Child: %s, Map: Decrease, Weight: 2", serviceNames[1]))::apply);
+        wait.until(pageContainsText(String.format("Child: %s, Map: Ignore, Weight: 3", serviceNames[2]))::apply);
         bsmAdminPageEditWindow.save();
         Thread.sleep(500); // pause
 
@@ -613,12 +613,12 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
         bsmAdminPageEditWindow.addReductionKeyEdge("test.rk.1", "Increase", 17);
 
         // verify edit
-        wait.until(pageContainsText("ReKey: test.rk.1, Map: Increase, Weight: 17"));
+        wait.until(pageContainsText("ReKey: test.rk.1, Map: Increase, Weight: 17")::apply);
         bsmAdminPageEditWindow.save();
 
         // verify save
         bsmAdminPage.openEditDialog(serviceName);
-        wait.until(pageContainsText("ReKey: test.rk.1, Map: Increase, Weight: 17"));
+        wait.until(pageContainsText("ReKey: test.rk.1, Map: Increase, Weight: 17")::apply);
         bsmAdminPageEditWindow.cancel();
 
         // clean up
@@ -647,22 +647,22 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
             bsmAdminPageEditWindow.addReductionKeyEdge("test.rk.2", "Increase", 1);
 
             // verify edit dialog
-            wait.until(pageContainsText(String.format("Child: %s, Map: Identity, Weight: 1", child1)));
-            wait.until(pageContainsText(String.format("Child: %s, Map: Ignore, Weight: 1", child2)));
-            wait.until(pageContainsText("IPSvc: NodeA /0:0:0:0:0:0:0:1 BBB, Map: Identity, Weight: 1"));
-            wait.until(pageContainsText("IPSvc: NodeA /127.0.0.1 CCC, Map: Ignore, Weight: 1"));
-            wait.until(pageContainsText("ReKey: test.rk.1, Map: Decrease, Weight: 1"));
-            wait.until(pageContainsText("ReKey: test.rk.2, Map: Increase, Weight: 1"));
+            wait.until(pageContainsText(String.format("Child: %s, Map: Identity, Weight: 1", child1))::apply);
+            wait.until(pageContainsText(String.format("Child: %s, Map: Ignore, Weight: 1", child2))::apply);
+            wait.until(pageContainsText("IPSvc: NodeA /0:0:0:0:0:0:0:1 BBB, Map: Identity, Weight: 1")::apply);
+            wait.until(pageContainsText("IPSvc: NodeA /127.0.0.1 CCC, Map: Ignore, Weight: 1")::apply);
+            wait.until(pageContainsText("ReKey: test.rk.1, Map: Decrease, Weight: 1")::apply);
+            wait.until(pageContainsText("ReKey: test.rk.2, Map: Increase, Weight: 1")::apply);
 
             // verify after save
             bsmAdminPageEditWindow.save();
             bsmAdminPage.openEditDialog(parentServiceName);
-            wait.until(pageContainsText(String.format("Child: %s, Map: Identity, Weight: 1", child1)));
-            wait.until(pageContainsText(String.format("Child: %s, Map: Ignore, Weight: 1", child2)));
-            wait.until(pageContainsText("IPSvc: NodeA /0:0:0:0:0:0:0:1 BBB, Map: Identity, Weight: 1"));
-            wait.until(pageContainsText("IPSvc: NodeA /127.0.0.1 CCC, Map: Ignore, Weight: 1"));
-            wait.until(pageContainsText("ReKey: test.rk.1, Map: Decrease, Weight: 1"));
-            wait.until(pageContainsText("ReKey: test.rk.2, Map: Increase, Weight: 1"));
+            wait.until(pageContainsText(String.format("Child: %s, Map: Identity, Weight: 1", child1))::apply);
+            wait.until(pageContainsText(String.format("Child: %s, Map: Ignore, Weight: 1", child2))::apply);
+            wait.until(pageContainsText("IPSvc: NodeA /0:0:0:0:0:0:0:1 BBB, Map: Identity, Weight: 1")::apply);
+            wait.until(pageContainsText("IPSvc: NodeA /127.0.0.1 CCC, Map: Ignore, Weight: 1")::apply);
+            wait.until(pageContainsText("ReKey: test.rk.1, Map: Decrease, Weight: 1")::apply);
+            wait.until(pageContainsText("ReKey: test.rk.2, Map: Increase, Weight: 1")::apply);
             bsmAdminPageEditWindow.cancel();
 
             // cleanup
@@ -680,7 +680,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
         // create Business Service with one Edge and persist
         final String serviceName = createUniqueBusinessServiceName();
         BsmAdminPageEditWindow bsmAdminPageEditWindow = bsmAdminPage.openNewDialog(serviceName).addReductionKeyEdge("some.reduction.key", "Increase", 1);
-        wait.until(pageContainsText("ReKey: some.reduction.key, Map: Increase, Weight: 1"));
+        wait.until(pageContainsText("ReKey: some.reduction.key, Map: Increase, Weight: 1")::apply);
         bsmAdminPageEditWindow.save();
 
         // remove persisted edge
@@ -698,7 +698,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
         // create Business Service with one Edge and persist
         final String serviceName = createUniqueBusinessServiceName();
         BsmAdminPageEditWindow bsmAdminPageEditWindow = bsmAdminPage.openNewDialog(serviceName).addReductionKeyEdge("some.reduction.key", "Increase", 1);
-        wait.until(pageContainsText("ReKey: some.reduction.key, Map: Increase, Weight: 1"));
+        wait.until(pageContainsText("ReKey: some.reduction.key, Map: Increase, Weight: 1")::apply);
         // remove transient edge
         bsmAdminPageEditWindow.removeEdge("ReKey: some.reduction.key, Map: Increase, Weight: 1");
         verifyElementNotPresent("ReKey: some.reduction.key, Map: Increase, Weight: 1");
@@ -802,7 +802,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
                                                                                    input.manage().timeouts().implicitlyWait(LOAD_TIMEOUT, TimeUnit.MILLISECONDS);
                                                                                }
                                                                            }
-                                                                       })
+                                                                       })::apply
                 );
     }
 
@@ -811,7 +811,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
         // create Business Service with one Edge and persist
         final String serviceName = createUniqueBusinessServiceName();
         BsmAdminPageEditWindow bsmAdminPageEditWindow = bsmAdminPage.openNewDialog(serviceName).addReductionKeyEdge("some.reduction.key", "Increase", 1);
-        wait.until(pageContainsText("ReKey: some.reduction.key, Map: Increase, Weight: 1"));
+        wait.until(pageContainsText("ReKey: some.reduction.key, Map: Increase, Weight: 1")::apply);
         // remove transient edge
         bsmAdminPageEditWindow.editEdge("ReKey: some.reduction.key, Map: Increase, Weight: 1", "Decrease", 2);
         verifyElementPresent("ReKey: some.reduction.key, Map: Decrease, Weight: 2");
@@ -823,7 +823,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
         // create Business Service with one Edge and persist
         final String serviceName = createUniqueBusinessServiceName();
         BsmAdminPageEditWindow bsmAdminPageEditWindow = bsmAdminPage.openNewDialog(serviceName).addReductionKeyEdge("some.reduction.key", "Increase", 1);
-        wait.until(pageContainsText("ReKey: some.reduction.key, Map: Increase, Weight: 1"));
+        wait.until(pageContainsText("ReKey: some.reduction.key, Map: Increase, Weight: 1")::apply);
         bsmAdminPageEditWindow.save();
 
         // remove persisted edge
@@ -841,7 +841,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
         // create Business Service with one Edge and persist
         final String serviceName = createUniqueBusinessServiceName();
         BsmAdminPageEditWindow bsmAdminPageEditWindow = bsmAdminPage.openNewDialog(serviceName).addReductionKeyEdge("some.reduction.key", "Increase", 1, "so-friendly");
-        wait.until(pageContainsText("ReKey: some.reduction.key (so-friendly), Map: Increase, Weight: 1"));
+        wait.until(pageContainsText("ReKey: some.reduction.key (so-friendly), Map: Increase, Weight: 1")::apply);
         // remove transient edge
         bsmAdminPageEditWindow.editEdge("ReKey: some.reduction.key (so-friendly), Map: Increase, Weight: 1", "Decrease", 2, "very-friendly");
         verifyElementPresent("ReKey: some.reduction.key (very-friendly), Map: Decrease, Weight: 2");
@@ -853,7 +853,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
         // create Business Service with one Edge and persist
         final String serviceName = createUniqueBusinessServiceName();
         BsmAdminPageEditWindow bsmAdminPageEditWindow = bsmAdminPage.openNewDialog(serviceName).addReductionKeyEdge("some.reduction.key", "Increase", 1, "so-friendly");
-        wait.until(pageContainsText("ReKey: some.reduction.key (so-friendly), Map: Increase, Weight: 1"));
+        wait.until(pageContainsText("ReKey: some.reduction.key (so-friendly), Map: Increase, Weight: 1")::apply);
         bsmAdminPageEditWindow.save();
 
         // remove persisted edge
@@ -871,7 +871,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
         // create Business Service with one attribute and persist
         final String serviceName = createUniqueBusinessServiceName();
         BsmAdminPageEditWindow bsmAdminPageEditWindow = bsmAdminPage.openNewDialog(serviceName).addAttribute("foo", "bar");
-        wait.until(pageContainsText("foo=bar"));
+        wait.until(pageContainsText("foo=bar")::apply);
         bsmAdminPageEditWindow.save();
 
         // add another attribute
@@ -896,7 +896,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
         // create Business Service with one attribute and persist
         final String serviceName = createUniqueBusinessServiceName();
         BsmAdminPageEditWindow bsmAdminPageEditWindow = bsmAdminPage.openNewDialog(serviceName).addAttribute("foo", "bar");
-        wait.until(pageContainsText("foo=bar"));
+        wait.until(pageContainsText("foo=bar")::apply);
         bsmAdminPageEditWindow.save();
 
         // edit attribute
@@ -930,7 +930,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
 
         // If we expand, we should be able to see the child
         bsmAdminPage.expandAll();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("deleteButton-" + serviceNames[1])));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("deleteButton-" + serviceNames[1]))::apply);
 
         // Delete the business services
         for (int i = 0; i < serviceNames.length; i++) {
@@ -1049,7 +1049,7 @@ public class BSMAdminIT extends OpenNMSSeleniumTestCase {
 
         bsmAdminPage.expandAll();
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("deleteButton-" + ddd)));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("deleteButton-" + ddd))::apply);
 
         bsmAdminPage.delete(aaa,true);
         bsmAdminPage.delete(bbb,true);

@@ -67,7 +67,7 @@ public class UserIT extends OpenNMSSeleniumTestCase {
         m_driver.findElement(By.cssSelector("button[type=submit]")).click();
 
         try {
-            final Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+            final Alert alert = wait.until(ExpectedConditions.alertIsPresent()::apply);
             alert.dismiss();
         } catch (final Exception e) {
             LOG.debug("Got an exception waiting for a 'wrong password' alert.", e);

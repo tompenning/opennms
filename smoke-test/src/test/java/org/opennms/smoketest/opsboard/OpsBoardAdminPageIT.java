@@ -85,8 +85,8 @@ public class OpsBoardAdminPageIT extends OpenNMSSeleniumTestCase {
         // Now ensure that access was NOT denied
         try {
             setImplicitWait(1, TimeUnit.SECONDS);
-            new WebDriverWait(m_driver, 5).until(not(pageContainsText("Access denied")));
-            new WebDriverWait(m_driver, 5).until(pageContainsText("Surveillance view"));
+            new WebDriverWait(m_driver, 5).until(not(pageContainsText("Access denied"))::apply);
+            new WebDriverWait(m_driver, 5).until(pageContainsText("Surveillance view")::apply);
         } finally {
             setImplicitWait();
         }

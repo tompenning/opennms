@@ -71,7 +71,7 @@ public class OutagePageIT extends OpenNMSSeleniumTestCase {
 
         outagePage();
         findElementByName("outageIdForm").findElement(By.xpath("//button[@type='submit']")).click();
-        final Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        final Alert alert = wait.until(ExpectedConditions.alertIsPresent()::apply);
         assertNotNull(alert);
         assertEquals("Please enter a valid outage ID.", alert.getText());
         alert.dismiss();

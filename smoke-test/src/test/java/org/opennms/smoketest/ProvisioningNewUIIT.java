@@ -86,24 +86,24 @@ public class ProvisioningNewUIIT extends OpenNMSSeleniumTestCase {
 
         // Add a new requisition
         clickId("add-requisition", false);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("form.bootbox-form > input.bootbox-input")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("form.bootbox-form > input.bootbox-input"))::apply);
         enterText(By.cssSelector("form.bootbox-form > input.bootbox-input"), REQUISITION_NAME);
         findElementByXpath("//div/button[text()='OK']").click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='" + REQUISITION_NAME + "']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='" + REQUISITION_NAME + "']"))::apply);
 
         // trigger dropdown menu
         final String moreActionsButton = "button.btn[uib-tooltip='More actions for requisition "+REQUISITION_NAME+"']";
         clickElement(By.cssSelector(moreActionsButton));
 
         // Edit the foreign source
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("editForeignSource-"+REQUISITION_NAME))).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("ul.nav-tabs > li > a.nav-link")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4[text()='Foreign Source Definition for Requisition " + REQUISITION_NAME + "']")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("editForeignSource-"+REQUISITION_NAME))::apply).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("ul.nav-tabs > li > a.nav-link"))::apply);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4[text()='Foreign Source Definition for Requisition " + REQUISITION_NAME + "']"))::apply);
 
         // Add a detector
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("add-detector")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("add-detector"))::apply);
         clickId("add-detector", false);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("form[name='detectorForm']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("form[name='detectorForm']"))::apply);
         enterText(By.xpath("//form[@name='detectorForm']//input[@ng-model='detector.name']"), NODE_SERVICE);
         enterText(By.xpath("//form[@name='detectorForm']//input[@ng-model='detector.class']"), "HTTP");
         findElementByXpath("//form[@name='detectorForm']//ul[contains(@class, 'dropdown-menu')]/li/a/strong[text()='HTTP']").click();
@@ -111,15 +111,15 @@ public class ProvisioningNewUIIT extends OpenNMSSeleniumTestCase {
 
         // Add a parameter to the detector
         clickId("add-detector-parameter", false);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[name='paramName']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[name='paramName']"))::apply);
         enterText(By.cssSelector("input[name='paramName']"), "po");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@title='port']"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@title='port']"))::apply).click();
         enterText(By.cssSelector("input[name='paramValue']"), "8980");
         //enterText(By.cssSelector("input[name='paramValue']"), Keys.ENTER);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("save-detector"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("save-detector"))::apply).click();
         waitForModalClose();
         enterText(By.cssSelector("input[placeholder='Search/Filter Detectors'][ng-model='filters.detector']"), "HTTP-8980");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='"+NODE_SERVICE+"']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='"+NODE_SERVICE+"']"))::apply);
 
         // Add a policy to the detector
         findElementByCss("#tab-policies .ng-binding").click();
@@ -134,44 +134,44 @@ public class ProvisioningNewUIIT extends OpenNMSSeleniumTestCase {
         enterText(By.xpath("(//input[@name='paramValue'])[2]"), Keys.ENTER);
         clickId("save-policy", false);
         waitForModalClose();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='No IPs']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='No IPs']"))::apply);
 
         // Save foreign source definition
         clickId("save-foreign-source", false);
-        wait.until(ExpectedConditions.not(ExpectedConditions.visibilityOfElementLocated(By.id("save-foreign-source"))));
+        wait.until(ExpectedConditions.not(ExpectedConditions.visibilityOfElementLocated(By.id("save-foreign-source")))::apply);
 
         // Go to the Requisition page
         clickId("go-back", false);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4[text()='Requisition " + REQUISITION_NAME + " (0 defined, 0 deployed)']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4[text()='Requisition " + REQUISITION_NAME + " (0 defined, 0 deployed)']"))::apply);
 
         // Add node to a requisition
         clickId("add-node", false);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nodeLabel"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nodeLabel"))::apply).clear();
         enterText(By.id("nodeLabel"), NODE_LABEL);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("foreignId"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("foreignId"))::apply).clear();
         enterText(By.id("foreignId"), NODE_FOREIGNID);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("location"))).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("location"))::apply).clear();
         saveNode();
 
         // Add an IP Interface
         clickId("tab-interfaces", false);
         findElementById("add-interface").click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("form[name='intfForm']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("form[name='intfForm']"))::apply);
         final By ipaddrBy = By.cssSelector("input#ipAddress");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(ipaddrBy));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(ipaddrBy)::apply);
         enterText(ipaddrBy, NODE_IPADDR);
 
         // Add a service to the IP Interface
         findElementById("add-service").click();
         final By xpath = By.cssSelector("input[name='serviceName']");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(xpath));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(xpath)::apply);
         Thread.sleep(100);
         enterText(xpath, "HTTP-89");
         findElementByXpath("//a[@title='HTTP-8980']/strong").click();
 
         // Save the IP interface
         clickId("save-interface", false);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[contains(@class,'ng-binding') and text()='" + NODE_IPADDR + "']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[contains(@class,'ng-binding') and text()='" + NODE_IPADDR + "']"))::apply);
 
         // Add an asset to the node
         clickId("tab-assets", false);
@@ -194,21 +194,21 @@ public class ProvisioningNewUIIT extends OpenNMSSeleniumTestCase {
 
         // Go to the requisition page
         clickId("go-back", false);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[contains(@class,'ng-binding') and text()='" + NODE_LABEL + "']")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[contains(@class,'ng-binding') and text()='" + NODE_FOREIGNID + "']")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[contains(@class,'ng-binding') and text()='" + NODE_IPADDR + " (P)']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[contains(@class,'ng-binding') and text()='" + NODE_LABEL + "']"))::apply);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[contains(@class,'ng-binding') and text()='" + NODE_FOREIGNID + "']"))::apply);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[contains(@class,'ng-binding') and text()='" + NODE_IPADDR + " (P)']"))::apply);
 
         // Synchronize the requisition
         clickId("synchronize", false);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".modal-dialog button.btn.btn-primary")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".modal-dialog button.btn.btn-primary"))::apply);
         WebElement modal = findModal();
         modal.findElement(By.xpath("//div/button[text()='Yes']")).click();
         waitForModalClose();
-        wait.until(new WaitForNodesInRequisition(REQUISITION_NAME, 1));
-        wait.until(new WaitForNodesInDatabase(REQUISITION_NAME, 1));
+        wait.until(new WaitForNodesInRequisition(REQUISITION_NAME, 1)::apply);
+        wait.until(new WaitForNodesInDatabase(REQUISITION_NAME, 1)::apply);
         clickId("refresh", false);
         clickId("refreshDeployedStats", false);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4[text()='Requisition " + REQUISITION_NAME + " (1 defined, 1 deployed)']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h4[text()='Requisition " + REQUISITION_NAME + " (1 defined, 1 deployed)']"))::apply);
 
         // Go to the requisitions page
         clickId("go-back", false);
@@ -247,14 +247,14 @@ public class ProvisioningNewUIIT extends OpenNMSSeleniumTestCase {
             m_driver.manage().timeouts().implicitlyWait(LOAD_TIMEOUT, TimeUnit.MILLISECONDS);
         }
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.linkText("ICMP")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.linkText("ICMP"))::apply);
         findElementByXpath("//a[contains(@href, 'element/interface.jsp') and text()='" + NODE_IPADDR + "']");
         findElementByLink("HTTP-8980");
     }
 
     protected void saveNode() throws InterruptedException {
         clickId("save-node", false);
-        wait.until(ExpectedConditions.not(ExpectedConditions.visibilityOfElementLocated(By.id("save-node"))));
+        wait.until(ExpectedConditions.not(ExpectedConditions.visibilityOfElementLocated(By.id("save-node")))::apply);
     }
 
     protected void waitForDropdownClose() {
@@ -268,6 +268,6 @@ public class ProvisioningNewUIIT extends OpenNMSSeleniumTestCase {
 
     protected WebElement findModal() {
         final String xpath = "//div[contains(@class, 'modal-dialog')]";
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath))::apply);
     }
 }

@@ -74,14 +74,14 @@ public class JmxConfigurationGeneratorIT extends OpenNMSSeleniumTestCase {
         findElementById("next").click();
 
         // configuration summary
-        wait.until(pageContainsText("collectd-configuration.xml"));
+        wait.until(pageContainsText("collectd-configuration.xml")::apply);
 
         // backwards
         findElementById("previous").click();
-        wait.until(pageContainsText(MBEANS_VIEW_TREE_WAIT_NAME));
+        wait.until(pageContainsText(MBEANS_VIEW_TREE_WAIT_NAME)::apply);
 
         findElementById("previous").click();
-        wait.until(pageContainsText("Skip JVM MBeans"));
+        wait.until(pageContainsText("Skip JVM MBeans")::apply);
     }
 
     /*
@@ -95,11 +95,11 @@ public class JmxConfigurationGeneratorIT extends OpenNMSSeleniumTestCase {
 
         // go to last page
         findElementById("next").click();
-        wait.until(pageContainsText("collectd-configuration.xml"));
+        wait.until(pageContainsText("collectd-configuration.xml")::apply);
 
         // switch to jmx-datacollection-config.xml tab
         findElementByXpath("//div[text()='jmx-datacollection-config.xml']").click();
-        wait.until(pageContainsText("JMXMP protocol."));
+        wait.until(pageContainsText("JMXMP protocol.")::apply);
 
         // verify output
         final String jmxDatacollectionConfigContent = findElementByXpath("//textarea").getAttribute("value");
@@ -153,8 +153,7 @@ public class JmxConfigurationGeneratorIT extends OpenNMSSeleniumTestCase {
 
             try {
                 setImplicitWait(1, TimeUnit.SECONDS);
-                found = shortWait.until(new ExpectedCondition<Boolean>() {
-                    @Override public Boolean apply(final WebDriver driver) {
+                found = shortWait.until(driver -> {
                         try {
                             final WebElement elem = driver.findElement(By.cssSelector("div.v-Notification-error h1"));
                             LOG.debug("Notification error element: {}", elem);
@@ -175,8 +174,7 @@ public class JmxConfigurationGeneratorIT extends OpenNMSSeleniumTestCase {
                         }
 
                         return false;
-                    }
-                });
+                    });
             } catch (final Exception e) {
                 LOG.debug("Failed to configure authentication and port.", e);
             } finally {
@@ -213,11 +211,11 @@ public class JmxConfigurationGeneratorIT extends OpenNMSSeleniumTestCase {
         Thread.sleep(5000);
 
         new Actions(m_driver).contextClick(findElementByXpath(treeNodeXpath)).perform(); // right click
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(deselectXpath)));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(deselectXpath))::apply);
 
         // deselect/select Element depending on the value of select.
         findElementByXpath(select ? selectXpath : deselectXpath).click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("previous")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("previous"))::apply);
     }
 
     private int find(String regExp, String text) {

@@ -420,7 +420,7 @@ public class ClassificationRulePageIT extends OpenNMSSeleniumTestCase {
 
         public Page open() {
             m_driver.get(url);
-            new WebDriverWait(m_driver, 5).until((Predicate<WebDriver>) (driver) -> getTabs().size() == expectedTabs.size());
+            new WebDriverWait(m_driver, 5).until(driver -> getTabs().size() == expectedTabs.size());
             return this;
         }
 
@@ -516,7 +516,7 @@ public class ClassificationRulePageIT extends OpenNMSSeleniumTestCase {
 
         public void click() {
             getElement().click();
-            new WebDriverWait(m_driver, 5).until((ExpectedCondition<Boolean>) input -> page.getTab(name).isActive());
+            new WebDriverWait(m_driver, 5).until(input -> page.getTab(name).isActive());
         }
 
         public WebElement getElement() {
@@ -613,7 +613,7 @@ public class ClassificationRulePageIT extends OpenNMSSeleniumTestCase {
 
                     // Verify the tab was actually enabled/disabled
                     new WebDriverWait(m_driver, 5)
-                            .until((Predicate<WebDriver>) input -> {
+                            .until(input -> {
                                 final Group group = tab.getGroup(name);
                                 return enabled == group.isEnabled();
                             });
@@ -740,7 +740,7 @@ public class ClassificationRulePageIT extends OpenNMSSeleniumTestCase {
 
         // Ensure dialog closes
         private void ensureClosed() {
-            execute(() -> new WebDriverWait(m_driver, 5).until(ExpectedConditions.numberOfElementsToBe(By.id("ruleModal"), 0)));
+            execute(() -> new WebDriverWait(m_driver, 5).until(ExpectedConditions.numberOfElementsToBe(By.id("ruleModal"), 0)::apply));
         }
 
         private void setInput(String id, String input) {
@@ -787,7 +787,7 @@ public class ClassificationRulePageIT extends OpenNMSSeleniumTestCase {
                     .open(() -> {
                         // Click add rule button
                         findElementById("action.addRule").click();
-                        new WebDriverWait(m_driver, 5).until(pageContainsText("Create Classification Rule"));
+                        new WebDriverWait(m_driver, 5).until(pageContainsText("Create Classification Rule")::apply);
                     });
         }
 
@@ -796,7 +796,7 @@ public class ClassificationRulePageIT extends OpenNMSSeleniumTestCase {
                     .open(() -> {
                         // click edit button
                         findElementById("action." + position + ".edit").click();
-                        new WebDriverWait(m_driver, 5).until(pageContainsText("Edit Classification Rule"));
+                        new WebDriverWait(m_driver, 5).until(pageContainsText("Edit Classification Rule")::apply);
                     });
         }
 
@@ -837,7 +837,7 @@ public class ClassificationRulePageIT extends OpenNMSSeleniumTestCase {
             execute(() -> {
                 final String deleteActionId = "action." + position + ".delete";
                 findElementById(deleteActionId).click();
-                new WebDriverWait(m_driver, 5).until(ExpectedConditions.numberOfElementsToBe(By.id(deleteActionId), 0));
+                new WebDriverWait(m_driver, 5).until(ExpectedConditions.numberOfElementsToBe(By.id(deleteActionId), 0)::apply);
                 return null;
             });
         }
@@ -853,7 +853,7 @@ public class ClassificationRulePageIT extends OpenNMSSeleniumTestCase {
             // Verify the page is actually active
             execute(() -> new WebDriverWait(m_driver, 5).until(
                             ExpectedConditions.visibilityOf(
-                                    findElementByXpath("//li[contains(@class, 'active')]/a[contains(text(), '" + page + "')]"))));
+                                    findElementByXpath("//li[contains(@class, 'active')]/a[contains(text(), '" + page + "')]"))::apply));
         }
 
         public void deleteAll() {

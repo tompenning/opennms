@@ -76,7 +76,7 @@ public abstract class AbstractPage {
     protected void waitUntil(ExpectedCondition<Boolean> condition) {
         try {
             testCase.setImplicitWait(5, TimeUnit.SECONDS);
-            new WebDriverWait(getDriver(), 5).until(condition);
+            new WebDriverWait(getDriver(), 5).until(condition::apply);
         } finally {
             testCase.setImplicitWait();
         }

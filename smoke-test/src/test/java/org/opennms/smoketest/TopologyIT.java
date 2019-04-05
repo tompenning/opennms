@@ -209,7 +209,7 @@ public class TopologyIT extends OpenNMSSeleniumTestCase {
                 getElement().findElement(By.xpath(iconOverlayXpath)).click();
 
                 // Wait until vertex is actually selected before continuing
-                new WebDriverWait(testCase.m_driver, 30).until((Predicate<WebDriver>) input -> {
+                new WebDriverWait(testCase.m_driver, 30).until(input -> {
                     final WebElement element = getElement().findElement(By.xpath(iconOverlayXpath + "/.."));
                     return element.getAttribute("class").contains("selected");
                 });
@@ -250,7 +250,7 @@ public class TopologyIT extends OpenNMSSeleniumTestCase {
                     testCase.setImplicitWait(1, TimeUnit.SECONDS);
                     testCase.findElementByXpath("//*[contains(text(), 'Change Icon')]");
                     testCase.findElementByXpath(iconXpath).click();
-                    new WebDriverWait(testCase.m_driver, 10).until((Predicate<WebDriver>) input -> {
+                    new WebDriverWait(testCase.m_driver, 10).until(input -> {
                         final WebElement elementByXpath = testCase.findElementByXpath(iconXpath);
                         return elementByXpath.getAttribute("class").contains("selected");
                     });
@@ -417,7 +417,7 @@ public class TopologyIT extends OpenNMSSeleniumTestCase {
             testCase.m_driver.get(topologyUiUrl);
             // Wait for the "View" menu to be clickable before returning control to the test in order
             // to make sure that the page is fully loaded
-            testCase.wait.until(ExpectedConditions.elementToBeClickable(getCriteriaForMenubarElement("View")));
+            testCase.wait.until(ExpectedConditions.elementToBeClickable(getCriteriaForMenubarElement("View"))::apply);
             return this;
         }
  

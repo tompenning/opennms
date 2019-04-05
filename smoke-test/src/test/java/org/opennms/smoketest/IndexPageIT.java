@@ -62,7 +62,7 @@ public class IndexPageIT extends OpenNMSSeleniumTestCase {
         // Verify search. Should not result in 400 BAD REQUEST
         enterText(By.name("nodeId"), "192.0.2.1");
         clickElement(By.name("nodeIdSearchButton"));
-        wait.until(pageContainsText("None found."));
+        wait.until(pageContainsText("None found.")::apply);
     }
 
     /**
@@ -108,17 +108,14 @@ public class IndexPageIT extends OpenNMSSeleniumTestCase {
         // try every 5 seconds, for 120 seconds, until the service on 127.0.0.2 has been detected as "down", or fail afterwards
         try {
             setImplicitWait(5, TimeUnit.SECONDS);
-            new WebDriverWait(m_driver, 120).until(new Predicate<WebDriver>() {
-                @Override
-                public boolean apply(@Nullable WebDriver input) {
+            new WebDriverWait(m_driver, 120).until(input -> {
                     // refresh page
                     input.get(getBaseUrl() + "opennms/index.jsp");
 
                     // Wait until we have markers
                     List<WebElement> markerElements = input.findElements(By.xpath("//*[contains(@class, 'leaflet-marker-icon')]"));
                     return !markerElements.isEmpty();
-                }
-            });
+                });
         } finally {
             setImplicitWait();
         }

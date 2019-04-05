@@ -100,10 +100,10 @@ public class QuickAddNodeIT extends OpenNMSSeleniumTestCase {
         findElementByCss("input[name='categoryName'");
         enterTextAutocomplete(By.cssSelector("input[name='categoryName']"), NODE_CATEGORY);
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("provision"))).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".modal-dialog button[data-bb-handler='main']"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("provision"))::apply).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".modal-dialog button[data-bb-handler='main']"))::apply).click();
 
-        wait.until(new WaitForNodesInDatabase(1));
+        wait.until(new WaitForNodesInDatabase(1)::apply);
     }
 
     protected WebElement enterTextAutocomplete(final By selector, final CharSequence... text) throws InterruptedException {

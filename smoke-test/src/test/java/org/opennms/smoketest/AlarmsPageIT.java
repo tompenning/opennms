@@ -94,7 +94,7 @@ public class AlarmsPageIT extends OpenNMSSeleniumTestCase {
     public void testAlarmLink() throws Exception {
         findElementByLink("All alarms (summary)").click();
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(@href,'alarm/detail.htm')]")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(@href,'alarm/detail.htm')]"))::apply);
 
         findElementByXpath("//a[contains(@href,'alarm/detail.htm')]").click();
         findElementByXpath("//tr[@class]//th[text()='Severity']");

@@ -69,16 +69,16 @@ public class MenuHeaderIT extends OpenNMSSeleniumTestCase {
         // switchTo() by xpath is much faster than by ID
         //m_driver.switchTo().frame("surveillance-view-ui");
         m_driver.switchTo().frame(findElementByXpath("/html/body/div/iframe"));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Surveillance view: default']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Surveillance view: default']"))::apply);
         m_driver.switchTo().parentFrame();
         frontPage();
 
         final String reportsMenuName = "name=nav-Reports-top";
         clickMenuItem(reportsMenuName, "Charts", "charts/index.jsp");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("include-charts")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("include-charts"))::apply);
 
         clickMenuItem(reportsMenuName, "Resource Graphs", "graph/index.jsp");
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[contains(text()[normalize-space()], 'Standard Resource')]")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[contains(text()[normalize-space()], 'Standard Resource')]"))::apply);
 
         clickMenuItem(reportsMenuName, "KSC Reports", "KSC/index.jsp");
         findElementByXpath("//div[@class='card-header']/span[text()='Customized Reports']");
@@ -91,7 +91,7 @@ public class MenuHeaderIT extends OpenNMSSeleniumTestCase {
         // switchTo() by xpath is much faster than by ID
         //m_driver.switchTo().frame("surveillance-view-ui");
         m_driver.switchTo().frame(findElementByXpath("/html/body/div/iframe"));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Surveillance view: default']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Surveillance view: default']"))::apply);
         m_driver.switchTo().parentFrame();
         frontPage();
 
@@ -101,13 +101,13 @@ public class MenuHeaderIT extends OpenNMSSeleniumTestCase {
         frontPage();
         final String mapsMenuName = "name=nav-Maps-top";
         clickMenuItem(mapsMenuName, "Topology", "topology");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(), 'Selection Context')]")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='navbar']//a[@name='nav-Maps-top']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(), 'Selection Context')]"))::apply);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='navbar']//a[@name='nav-Maps-top']"))::apply);
 
         frontPage();
         clickMenuItem(mapsMenuName, "Geographical", "node-maps");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[text()='Show Severity >=']")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='navbar']//a[@name='nav-Maps-top']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[text()='Show Severity >=']"))::apply);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='navbar']//a[@name='nav-Maps-top']"))::apply);
 
         frontPage();
         final String adminMenuName = "name=nav-admin-top";

@@ -139,17 +139,17 @@ public class AdminSnmpConfigForIpPageIT extends OpenNMSSeleniumTestCase {
     @Test
     public void testVersionHandling() {
         new Select(findElementByName("version")).selectByVisibleText("v1");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='v1/v2c specific parameters']")));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//span[text()='v3 specific parameters']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='v1/v2c specific parameters']"))::apply);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//span[text()='v3 specific parameters']"))::apply);
 
         new Select(findElementByName("version")).selectByVisibleText("v2c");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='v1/v2c specific parameters']")));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//span[text()='v3 specific parameters']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='v1/v2c specific parameters']"))::apply);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//span[text()='v3 specific parameters']"))::apply);
 
         // change to v3
         new Select(findElementByName("version")).selectByVisibleText("v3");
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//span[text()='v1/v2c specific parameters']")));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='v3 specific parameters']")));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//span[text()='v1/v2c specific parameters']"))::apply);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='v3 specific parameters']"))::apply);
     }
 
     /**
@@ -252,7 +252,7 @@ public class AdminSnmpConfigForIpPageIT extends OpenNMSSeleniumTestCase {
 
         alertText = handleAlert();
         assertNull(alertText);
-        assertTrue(wait.until(pageContainsText("Finished configuring SNMP")));
+        assertTrue(wait.until(pageContainsText("Finished configuring SNMP")::apply));
 
         // valid first ip and valid last ip
         gotoPage();
@@ -262,7 +262,7 @@ public class AdminSnmpConfigForIpPageIT extends OpenNMSSeleniumTestCase {
 
         alertText = handleAlert();
         assertNull(alertText);
-        assertTrue(wait.until(pageContainsText("Finished configuring SNMP")));
+        assertTrue(wait.until(pageContainsText("Finished configuring SNMP")::apply));
     }
 
     /**
@@ -288,7 +288,7 @@ public class AdminSnmpConfigForIpPageIT extends OpenNMSSeleniumTestCase {
         findElementByName("saveConfig").click();
         String alertText = handleAlert();
         assertNull(alertText);
-        assertTrue(wait.until(pageContainsText("Finished configuring SNMP")));
+        assertTrue(wait.until(pageContainsText("Finished configuring SNMP")::apply));
 
         // OK
         gotoPage();
@@ -298,7 +298,7 @@ public class AdminSnmpConfigForIpPageIT extends OpenNMSSeleniumTestCase {
         findElementByName("saveConfig").click();
         alertText = handleAlert();
         assertNull(alertText);
-        assertTrue(wait.until(pageContainsText("Finished configuring SNMP")));
+        assertTrue(wait.until(pageContainsText("Finished configuring SNMP")::apply));
 
         // OK 
         gotoPage();
@@ -308,7 +308,7 @@ public class AdminSnmpConfigForIpPageIT extends OpenNMSSeleniumTestCase {
         findElementByName("saveConfig").click();
         alertText = handleAlert();
         assertNull(alertText);
-        assertTrue(wait.until(pageContainsText("Finished configuring SNMP")));
+        assertTrue(wait.until(pageContainsText("Finished configuring SNMP")::apply));
 
         // Error
         gotoPage();
@@ -327,7 +327,7 @@ public class AdminSnmpConfigForIpPageIT extends OpenNMSSeleniumTestCase {
         if (success) {
             // if we expect this page to succeed, we should have no alert text, and we should find the finish text
             assertNull(alertText);
-            assertTrue("Expected success on field '" + fieldLabel + "' with value " + fieldValue, wait.until(pageContainsText("Finished configuring SNMP")));
+            assertTrue("Expected success on field '" + fieldLabel + "' with value " + fieldValue, wait.until(pageContainsText("Finished configuring SNMP")::apply));
         } else {
             // if we expect a failure, check that the message matches
             assertNotNull(alertText);
