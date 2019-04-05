@@ -35,6 +35,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runners.Parameterized.Parameters;
 import org.opennms.core.test.xml.XmlTestNoCastor;
+import org.opennms.core.xml.JaxbUtils;
 
 public class IfTttConfigTest extends XmlTestNoCastor<IfTttConfig> {
 
@@ -138,14 +139,16 @@ public class IfTttConfigTest extends XmlTestNoCastor<IfTttConfig> {
         triggerSet22.getTriggers().add(trigger222);
 
         triggerPackage2.getTriggerSets().add(triggerSet22);
+        triggerPackage2.setUeiFilter("org.opennms.*");
 
         ifTttConfig.getTriggerPackages().add(triggerPackage2);
 
+        System.out.println(JaxbUtils.marshal(ifTttConfig));
         return Arrays.asList(new Object[][]{
                 {
                         ifTttConfig,
                         "<ifttt-config enabled=\"true\" key=\"key\" pollInterval=\"30\">\n" +
-                                "   <trigger-package categoryFilter=\"Package1\" onlyUnacknowledged=\"true\">\n" +
+                                "   <trigger-package categoryFilter=\"Package1\" onlyUnacknowledged=\"true\" ueiFilter=\".*\">\n" +
                                 "      <trigger-set name=\"11\">\n" +
                                 "         <trigger delay=\"111\" eventName=\"111\">\n" +
                                 "            <value1>value1111</value1>\n" +
@@ -171,7 +174,7 @@ public class IfTttConfigTest extends XmlTestNoCastor<IfTttConfig> {
                                 "         </trigger>\n" +
                                 "      </trigger-set>\n" +
                                 "   </trigger-package>\n" +
-                                "   <trigger-package categoryFilter=\"Foo2\" onlyUnacknowledged=\"true\">\n" +
+                                "   <trigger-package categoryFilter=\"Foo2\" onlyUnacknowledged=\"true\" ueiFilter=\"org.opennms.*\">\n" +
                                 "      <trigger-set name=\"21\">\n" +
                                 "         <trigger delay=\"211\" eventName=\"211\">\n" +
                                 "            <value1>value2111</value1>\n" +
@@ -206,7 +209,7 @@ public class IfTttConfigTest extends XmlTestNoCastor<IfTttConfig> {
     @Test
     public void testUnsetCategoryFilter() {
         TriggerPackage triggerPackage = new TriggerPackage();
-        Assert.assertEquals(".*", triggerPackage.getCategoryFilter());
+        Assert.assertEquals("", triggerPackage.getCategoryFilter());
     }
 
     @Test
@@ -214,6 +217,19 @@ public class IfTttConfigTest extends XmlTestNoCastor<IfTttConfig> {
         TriggerPackage triggerPackage = new TriggerPackage();
         triggerPackage.setCategoryFilter("foo|bar");
         Assert.assertEquals("foo|bar", triggerPackage.getCategoryFilter());
+    }
+
+    @Test
+    public void testUnsetUeiFilter() {
+        TriggerPackage triggerPackage = new TriggerPackage();
+        Assert.assertEquals(".*", triggerPackage.getUeiFilter());
+    }
+
+    @Test
+    public void testSetUeiFilter() {
+        TriggerPackage triggerPackage = new TriggerPackage();
+        triggerPackage.setUeiFilter("org.opennms.*");
+        Assert.assertEquals("org.opennms.*", triggerPackage.getUeiFilter());
     }
 }
 
