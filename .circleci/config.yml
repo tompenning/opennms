@@ -69,15 +69,15 @@ workflows:
   build-deploy:
     jobs:
       - build
-      - build-horizon-oci:
-          requires:
-            - build
-      - build-minion-oci:
-          requires:
-            - build
-      - build-sentinel-oci:
-          requires:
-            - build
+        #- build-horizon-oci:
+        #    requires:
+        #      - build
+        #- build-minion-oci:
+        #    requires:
+        #      - build
+        #- build-sentinel-oci:
+        #    requires:
+        #      - build
               #- publish-horizon-oci:
               #    requires:
               #      - build-horizon-oci
@@ -89,9 +89,10 @@ workflows:
               #      - build-sentinel-oci
       - smoke-test:
           requires:
-            - build-horizon-oci
-            - build-minion-oci
-            - build-sentinel-oci
+            - build
+              #- build-horizon-oci
+              #- build-minion-oci
+              #- build-sentinel-oci
 
 jobs:
   build:
@@ -107,14 +108,14 @@ jobs:
           command: |
             mvn clean -DskipTests=true
             ./compile.pl -DskipTests=true -Dbuild.skip.tarball=true
-      - run:
-          name: Build RPMs
-          command: |
-            ./makerpm.sh -a -d
+            #- run:
+            #    name: Build RPMs
+            #    command: |
+            #      ./makerpm.sh -a -d
       - save-maven-cache
-      - store_artifacts:
-          path: ~/project/target/rpm/RPMS/noarch
-          destination: rpms
+        #- store_artifacts:
+        #    path: ~/project/target/rpm/RPMS/noarch
+        #    destination: rpms
       - persist_to_workspace:
           root: ~/
           paths:
@@ -185,6 +186,7 @@ jobs:
 
   smoke-test:
     executor: smoke-test-executor
+    parallelism: 2
     steps:
       - attach_workspace:
           at: ~/

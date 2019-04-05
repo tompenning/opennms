@@ -93,7 +93,7 @@ public class DiscoveryIT {
     public void canDiscoverRemoteNodes() throws ClientProtocolException, IOException {
         Date startOfTest = new Date();
  
-        final String tomcatIp = minionSystem.getContainerInfo(ContainerAlias.TOMCAT)
+        final String containerIp = minionSystem.getContainerInfo(ContainerAlias.SNMPD)
                 .networkSettings().ipAddress();
         final InetSocketAddress opennmsHttp = minionSystem.getServiceAddress(ContainerAlias.OPENNMS, 8980);
         final HttpHost opennmsHttpHost = new HttpHost(opennmsHttp.getAddress().getHostAddress(), opennmsHttp.getPort());
@@ -112,7 +112,7 @@ public class DiscoveryIT {
         executor.execute(Request.Post(String.format("http://%s:%d/opennms/admin/discovery/actionDiscovery?action=AddSpecific",
                 opennmsHttp.getAddress().getHostAddress(), opennmsHttp.getPort()))
             .bodyForm(Form.form()
-                    .add("specificipaddress", tomcatIp)
+                    .add("specificipaddress", containerIp)
                     .add("specifictimeout", "2000")
                     .add("specificretries", "1")
                     .add("initialsleeptime", "30000")
