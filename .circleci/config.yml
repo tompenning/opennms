@@ -216,6 +216,15 @@ jobs:
           name: Smoke Tests
           command: |
             .circleci/scripts/smoke.sh
+      - run:
+          name: Gather test results
+          when: always
+          command: |
+            mkdir -p ~/test-results
+            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/ \;
+            find . -type f -regex ".*/target/failsafe-reports/.*xml" -exec cp {} ~/test-results/ \;
+      - store_test_results:
+          path: ~/test-results
 
   publish-horizon-oci:
     executor: docker-executor
