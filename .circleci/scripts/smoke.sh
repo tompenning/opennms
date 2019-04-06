@@ -32,6 +32,7 @@ mvn clean install -DskipTests=true
 
 cd ~/
 git clone --depth 1 https://github.com/OpenNMS/smoke-tests.git -b circleci
+cd smoke-tests/test-api/
 mvn clean install -DskipTests=true
 
 cd ~/project
