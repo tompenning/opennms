@@ -55,7 +55,7 @@ public interface SituationFeedbackRestService {
     public Collection<AlarmFeedback> getFeedback(@PathParam("situationId") int situationId);
 
     @POST
-    @Path("/{situationId}")
+    @Path("/{situationId : \\d+}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public void setFeedback(@PathParam("situationId") int situationId, List<AlarmFeedback> feedback);
