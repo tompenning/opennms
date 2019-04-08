@@ -47,9 +47,10 @@ commands:
     description: "Save Maven dependency cache"
     steps:
       - save_cache:
+          key: maven-dependencies-v2-{{ checksum "maven-dependency-cache.key" }}
           paths:
             - ~/.m2
-          key: maven-dependencies-v2-{{ checksum "maven-dependency-cache.key" }}
+          when: always
 
   dockerhub-login:
     description: "Connect to DockerHub"
@@ -210,6 +211,7 @@ jobs:
           no_output_timeout: 1.0h
           command: |
             .circleci/scripts/itest.sh
+      - save-maven-cache
       - run:
           name: Gather test results
           when: always
@@ -252,6 +254,7 @@ jobs:
           name: Smoke Tests
           command: |
             .circleci/scripts/smoke.sh
+      - save-maven-cache
       - run:
           name: Gather test results
           when: always
