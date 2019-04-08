@@ -3,7 +3,8 @@ echo "#### Allowing non-root ICMP"
 sudo sysctl net.ipv4.ping_group_range='0 429496729'
 
 echo "#### Setting up Postgres"
-docker run --rm --name postgres-onms-itest -p 5432:5432 -d postgres:9.5.1
+cd ~/project
+./.circleci/scripts/postgres.sh
 
 echo "#### Executing tests"
 cd ~/project
