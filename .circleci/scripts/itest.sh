@@ -6,8 +6,8 @@ echo "#### Setting up Postgres"
 cd ~/project
 ./.circleci/scripts/postgres.sh
 
-echo "#### Installing R"
-sudo apt -y install R-base
+echo "#### Installing other dependencies"
+sudo apt -y install R-base rrdtool
 
 echo "#### Executing tests"
 cd ~/project
