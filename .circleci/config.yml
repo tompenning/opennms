@@ -95,9 +95,9 @@ workflows:
               #- build-horizon-oci
               #- build-minion-oci
               #- build-sentinel-oci
-      - smoke-test:
-          requires:
-            - build
+              #  - smoke-test:
+              #      requires:
+              #        - build
               #- build-horizon-oci
               #- build-minion-oci
               #- build-sentinel-oci
@@ -194,7 +194,7 @@ jobs:
 
   integration-test:
     executor: integration-test-executor
-    parallelism: 2
+    parallelism: 4
     steps:
       - attach_workspace:
           at: ~/
