@@ -6,6 +6,9 @@ echo "#### Setting up Postgres"
 cd ~/project
 ./.circleci/scripts/postgres.sh
 
+echo "#### Installing R"
+apt -y install R-base
+
 echo "#### Executing tests"
 cd ~/project
 pyenv local 3.5.2
