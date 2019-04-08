@@ -7,6 +7,8 @@ executors:
   docker-executor:
     docker:
       - image: docker:18
+  integration-test-executor:
+    machine: true
   smoke-test-executor:
     machine: true
 
@@ -87,6 +89,12 @@ workflows:
               #- publish-sentinel-oci:
               #    requires:
               #      - build-sentinel-oci
+      - integration-test:
+          requires:
+            - build
+              #- build-horizon-oci
+              #- build-minion-oci
+              #- build-sentinel-oci
       - smoke-test:
           requires:
             - build
@@ -183,6 +191,34 @@ jobs:
           root: ~/
           paths:
             - project/opennms-container/sentinel/images/
+
+  integration-test:
+    executor: integration-test-executor
+    parallelism: 2
+    steps:
+      - attach_workspace:
+          at: ~/
+      # Link root user's m2 repo from the cache with our user's m2 repo (the circleci user)
+      - run:
+          name: Link maven repo with cache
+          command: |
+            sudo chmod 777 /root
+            ln -s /root/.m2 ~/.m2
+      - restore-maven-cache
+      - run:
+          name: Integration Tests
+          no_output_timeout: 1.0h
+          command: |
+            .circleci/scripts/itest.sh
+      - run:
+          name: Gather test results
+          when: always
+          command: |
+            mkdir -p ~/test-results
+            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/ \;
+            find . -type f -regex ".*/target/failsafe-reports/.*xml" -exec cp {} ~/test-results/ \;
+      - store_test_results:
+          path: ~/test-results
 
   smoke-test:
     executor: smoke-test-executor
