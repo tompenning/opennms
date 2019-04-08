@@ -7,7 +7,7 @@ cd ~/project
 ./.circleci/scripts/postgres.sh
 
 echo "#### Installing R"
-apt -y install R-base
+sudo apt -y install R-base
 
 echo "#### Executing tests"
 cd ~/project
