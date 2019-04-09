@@ -90,15 +90,15 @@ workflows:
               #- publish-sentinel-oci:
               #    requires:
               #      - build-sentinel-oci
-      - integration-test:
-          requires:
-            - build
+              #- integration-test:
+              # requires:
+              # - build
               #- build-horizon-oci
               #- build-minion-oci
               #- build-sentinel-oci
-              #  - smoke-test:
-              #      requires:
-              #        - build
+      - smoke-test:
+          requires:
+            - build
               #- build-horizon-oci
               #- build-minion-oci
               #- build-sentinel-oci
