@@ -72,7 +72,7 @@ workflows:
   build-deploy:
     jobs:
       - build
-      - package
+      - package:
           requires:
             - build
         #- build-horizon-oci:
