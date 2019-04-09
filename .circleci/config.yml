@@ -72,6 +72,9 @@ workflows:
   build-deploy:
     jobs:
       - build
+      - package
+          requires:
+            - build
         #- build-horizon-oci:
         #    requires:
         #      - build
@@ -90,9 +93,9 @@ workflows:
               #- publish-sentinel-oci:
               #    requires:
               #      - build-sentinel-oci
-              #- integration-test:
-              # requires:
-              # - build
+      - integration-test:
+          requires:
+            - build
               #- build-horizon-oci
               #- build-minion-oci
               #- build-sentinel-oci
@@ -125,6 +128,22 @@ jobs:
         #- store_artifacts:
         #    path: ~/project/target/rpm/RPMS/noarch
         #    destination: rpms
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+  package:
+    executor: build-executor
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Build RPMs
+          command: |
+            ./makerpm.sh -a -d
+      - store_artifacts:
+          path: ~/project/target/rpm/RPMS/noarch
+          destination: rpms
       - persist_to_workspace:
           root: ~/
           paths:
