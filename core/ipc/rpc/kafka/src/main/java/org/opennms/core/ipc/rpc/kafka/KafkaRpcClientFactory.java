@@ -261,7 +261,8 @@ public class KafkaRpcClientFactory implements RpcClientFactory {
             kafkaConsumerRunner = new KafkaConsumerRunner(kafkaConsumer);
             executor.execute(kafkaConsumerRunner);
             // Initialize tracer from tracer registry.
-            tracer = tracerRegistry.getTracer(SystemInfoUtils.getInstanceId());
+            tracerRegistry.init(SystemInfoUtils.getInstanceId());
+            tracer = tracerRegistry.getTracer();
             LOG.info("started  kafka consumer with : {}", kafkaConfig);
             // Start a new thread which handles timeouts from delayQueue and calls response callback.
             timerExecutor.execute(() -> {

@@ -28,7 +28,6 @@
 
 package org.opennms.core.rpc.aws.sqs;
 
-import com.amazon.sqs.javamessaging.SQSConnectionFactory;
 import org.apache.camel.CamelContext;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.impl.SimpleRegistry;
@@ -38,6 +37,7 @@ import org.opennms.core.ipc.common.aws.sqs.AmazonSQSManager;
 import org.opennms.core.rpc.camel.CamelRpcServerRouteManager;
 import org.opennms.core.rpc.camel.MockMinionIdentity;
 import org.opennms.core.test.OpenNMSJUnit4ClassRunner;
+import org.opennms.core.tracing.api.TracerRegistry;
 import org.opennms.netmgt.model.OnmsDistPoller;
 import org.opennms.test.JUnitConfigurationEnvironment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +47,11 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+
+import com.amazon.sqs.javamessaging.SQSConnectionFactory;
+
+import io.opentracing.Tracer;
+import io.opentracing.util.GlobalTracer;
 
 @Ignore("Requires access to AWS")
 @RunWith(OpenNMSJUnit4ClassRunner.class)
@@ -77,6 +82,17 @@ public class EchoRpcIT extends org.opennms.core.rpc.camel.EchoRpcIT {
     @Qualifier("rpcClient")
     private CamelContext rpcClientContext;
 
+    private TracerRegistry tracerRegistry = new TracerRegistry() {
+        @Override
+        public Tracer getTracer() {
+            return GlobalTracer.get();
+        }
+
+        @Override
+        public void init(String serviceName) {
+        }
+    };
+
     @Override
     public CamelContext getContext() {
         SimpleRegistry registry = new SimpleRegistry();
@@ -92,7 +108,7 @@ public class EchoRpcIT extends org.opennms.core.rpc.camel.EchoRpcIT {
     @Override
     public CamelRpcServerRouteManager getRouteManager(CamelContext context) {
         return new AmazonSQSServerRouteManager(context,
-                new MockMinionIdentity(REMOTE_LOCATION_NAME), sqsManager);
+                new MockMinionIdentity(REMOTE_LOCATION_NAME), sqsManager, tracerRegistry);
     }
 
     @Ignore("Directed RPCs are not supported.")

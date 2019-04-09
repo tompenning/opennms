@@ -36,9 +36,9 @@ import org.junit.ClassRule;
 import org.junit.runner.RunWith;
 import org.opennms.core.rpc.camel.CamelRpcServerRouteManager;
 import org.opennms.core.rpc.camel.MockMinionIdentity;
-import org.opennms.core.rpc.jms.JmsRpcServerRouteManager;
 import org.opennms.core.test.OpenNMSJUnit4ClassRunner;
 import org.opennms.core.test.activemq.ActiveMQBroker;
+import org.opennms.core.tracing.api.TracerRegistry;
 import org.opennms.netmgt.model.OnmsDistPoller;
 import org.opennms.test.JUnitConfigurationEnvironment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +48,9 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+
+import io.opentracing.Tracer;
+import io.opentracing.util.GlobalTracer;
 
 @RunWith(OpenNMSJUnit4ClassRunner.class)
 @ContextConfiguration(locations={
@@ -77,6 +80,18 @@ public class EchoRpcIT extends org.opennms.core.rpc.camel.EchoRpcIT {
     @Qualifier("rpcClient")
     private CamelContext rpcClientContext;
 
+    private TracerRegistry tracerRegistry = new TracerRegistry() {
+        @Override
+        public Tracer getTracer() {
+            return GlobalTracer.get();
+        }
+
+
+        @Override
+        public void init(String serviceName) {
+        }
+    };
+
     @Override
     public CamelContext getContext() {
         SimpleRegistry registry = new SimpleRegistry();
@@ -93,6 +108,6 @@ public class EchoRpcIT extends org.opennms.core.rpc.camel.EchoRpcIT {
     @Override
     public CamelRpcServerRouteManager getRouteManager(CamelContext context) {
         return new JmsRpcServerRouteManager(context,
-                new MockMinionIdentity(REMOTE_LOCATION_NAME));
+                new MockMinionIdentity(REMOTE_LOCATION_NAME), tracerRegistry);
     }
 }
